@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Registration"
+    tools:context=".RegistrationActivity"
     android:scrollbarAlwaysDrawVerticalTrack="true">
 
     <TextView
@@ -30,7 +30,8 @@
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="96dp">
+        tools:layout_editor_absoluteY="96dp"
+        tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputLayoutNama"
@@ -123,6 +124,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="date"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayoutTelepon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="Masukkan No. Telepon"
+            app:errorEnabled="true"
+            app:startIconDrawable="@drawable/ic_phone_24"
+            android:layout_marginBottom="8dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
     <LinearLayout
