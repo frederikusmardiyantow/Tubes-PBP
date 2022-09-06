@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="#F4E9C5">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -132,7 +133,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="date"/>
+                    android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputLayoutTelepon"

@@ -7,4 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="utama">#F4E9C5</color>
+    <color name="utama2">#F3D986</color>
+
 </resources>
