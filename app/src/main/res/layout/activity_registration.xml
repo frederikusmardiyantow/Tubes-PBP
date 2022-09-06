@@ -25,12 +25,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="96dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_regis"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputLayout
