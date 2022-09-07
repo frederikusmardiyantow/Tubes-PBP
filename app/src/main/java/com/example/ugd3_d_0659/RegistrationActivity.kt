@@ -47,7 +47,7 @@ class RegistrationActivity : AppCompatActivity() {
             val confirm : String = inputConfirm.getEditText()?.getText().toString()
             val tanggal : String = inputTL.getEditText()?.getText().toString()
             val telepon : String = inputTelepon.getEditText()?.getText().toString()
-            val bundle = Bundle()
+            val mBundle = Bundle()
 
             if(nama.isEmpty()){
                 inputNama.setError("Nama tidak boleh kosong")
@@ -84,20 +84,22 @@ class RegistrationActivity : AppCompatActivity() {
                 checkRegis = false
             }
 
-            if( password.compareTo(confirm)<0){
+            if( password.compareTo(confirm)<0) {
                 inputConfirm.setError(" Password Salah")
                 checkRegis = false
-            }else{
+            }
+
+            if(nama.isNotEmpty() &&  username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && confirm.isNotEmpty() && tanggal.isNotEmpty() && telepon.isNotEmpty()){
                 checkRegis = true
             }
 
-            bundle.putString("username",username)
-            bundle.putString("password",password)
+            mBundle.putString("username",username)
+            mBundle.putString("password",password)
 
 
             if(!checkRegis) return@OnClickListener
             val moveMain = Intent(this@RegistrationActivity, HomeActivity::class.java)
-            moveMain.putExtra("login", bundle)
+            moveMain.putExtra("login", mBundle)
             startActivity(moveMain)
         })
     }
