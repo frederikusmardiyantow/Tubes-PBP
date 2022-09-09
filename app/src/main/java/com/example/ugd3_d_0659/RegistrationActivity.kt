@@ -97,7 +97,6 @@ class RegistrationActivity : AppCompatActivity() {
             mBundle.putString("username",username)
             mBundle.putString("password",password)
 
-
             if(!checkRegis) return@OnClickListener
             val moveMain = Intent(this@RegistrationActivity, MainActivity::class.java)
             moveMain.putExtra("login", mBundle)
