@@ -12,25 +12,29 @@ class MainActivity : AppCompatActivity() {
     private lateinit var inputUsername: TextInputLayout
     private lateinit var inputPassword: TextInputLayout
     private lateinit var mainLayout: ConstraintLayout
-    lateinit var mBundle: Bundle
-    lateinit var tempUsername :String
-    lateinit var tempPassword : String
+    var mBundle: Bundle? = null
+    var tempUsername :String = "admin"
+    var tempPassword : String ="admin"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setTitle("User Login")
-
+        getSupportActionBar()?.hide()
 
         inputUsername= findViewById(R.id.inputLayoutUsername)
         inputPassword= findViewById(R.id.inputLayoutPassword)
         mainLayout= findViewById(R.id.mainLayout)
 
-        getBundle()
-        inputUsername.getEditText()?.setText(tempUsername)
 
+        if(mBundle !=null){
 
+            getBundle()
+            inputUsername.getEditText()?.setText(tempUsername)
+            println(tempUsername)
+            inputPassword.getEditText()?.setText(tempPassword)
+            println(tempPassword)
+        }
 
 
         val btnRegis: Button = findViewById(R.id.btnRegistration)
@@ -55,7 +59,7 @@ class MainActivity : AppCompatActivity() {
                 checkLogin=false
             }
 
-            if(username.compareTo(tempUsername)<0 && password.compareTo(tempPassword)<0) checkLogin=true
+            if((username == tempUsername && password == tempPassword) || (username=="admin" && password=="admin")) checkLogin=true
             if(!checkLogin) return@OnClickListener
             val moveHome = Intent(this@MainActivity, HomeActivity::class.java)
             startActivity(moveHome)
@@ -64,8 +68,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getBundle() {
-        mBundle = intent.getBundleExtra("register")!!
-        tempUsername = mBundle.getString("username")!!
-        tempPassword = mBundle.getString("password")!!
+        mBundle = intent.getBundleExtra("login")!!
+        tempUsername = mBundle!!.getString("username")!!
+        tempPassword = mBundle!!.getString("password")!!
     }
 }

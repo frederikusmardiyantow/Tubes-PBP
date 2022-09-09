@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/page_1"
+        android:id="@+id/menu_home"
+        android:enabled="true"
+        android:icon="@drawable/ic_home_24"
+        android:title="Home"/>
+    <item
+        android:id="@+id/menu_mata_pelajaran"
         android:enabled="true"
         android:icon="@drawable/ic_mata_kuliah_24"
-        android:title="Mata Kuliah"/>
+        android:title="Mata Pelajaran"/>
     <item
-        android:id="@+id/page_2"
+        android:id="@+id/menu_reward"
         android:enabled="true"
         android:icon="@drawable/ic_reward_24"
         android:title="Reward"/>
     <item
-        android:id="@+id/page_2"
+        android:id="@+id/menu_profil"
         android:enabled="true"
         android:icon="@drawable/ic_profil_24"
         android:title="Profil"/>

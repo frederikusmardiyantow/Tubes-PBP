@@ -19,19 +19,20 @@ class RegistrationActivity : AppCompatActivity() {
     private lateinit var regisLayout: ConstraintLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_registration)
 
-        setTitle("User Login")
+        getSupportActionBar()?.hide()
+
         inputNama = findViewById(R.id.inputLayoutNama)
-        inputUsernameRegis = findViewById(R.id.inputLayoutUsername)
+        inputUsernameRegis = findViewById(R.id.inputLayoutUsernameRegis)
         inputEmail =findViewById(R.id.inputLayoutEmail)
-        inputPasswordRegis = findViewById(R.id.inputLayoutPassword)
+        inputPasswordRegis = findViewById(R.id.inputLayoutPasswordRegis)
         inputConfirm = findViewById(R.id.inputLayoutKonfirmPassword)
         inputTL = findViewById(R.id.inputLayoutTanggalLahir)
         inputTelepon = findViewById(R.id.inputLayoutTelepon)
         regisLayout =findViewById(R.id.regisLayout)
-        val btnBack: Button = findViewById(R.id.btnBack)
-        val btnRegis: Button = findViewById(R.id.btnRegistration)
+        var btnBack: Button = findViewById(R.id.btnBack)
+        var btnRegis: Button = findViewById(R.id.btnRegistration)
 
         btnBack.setOnClickListener {
             val moveLogin = Intent(this@RegistrationActivity, MainActivity::class.java)
@@ -98,7 +99,7 @@ class RegistrationActivity : AppCompatActivity() {
 
 
             if(!checkRegis) return@OnClickListener
-            val moveMain = Intent(this@RegistrationActivity, HomeActivity::class.java)
+            val moveMain = Intent(this@RegistrationActivity, MainActivity::class.java)
             moveMain.putExtra("login", mBundle)
             startActivity(moveMain)
         })

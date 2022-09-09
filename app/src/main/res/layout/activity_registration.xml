@@ -59,7 +59,7 @@
                     android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayoutUsername"
+                android:id="@+id/inputLayoutUsernameRegis"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -89,7 +89,7 @@
                     android:inputType="textEmailAddress"/>
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayoutPassword"
+                android:id="@+id/inputLayoutPasswordRegis"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
