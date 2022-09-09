@@ -24,7 +24,7 @@ class FragmentMataPelajaran : Fragment() {
         val layoutManager = LinearLayoutManager(context)
         val adapter: RVMataPelajaranAdapter = RVMataPelajaranAdapter(MataPelajaran.listOfMataPelajaran)
 
-        //menghubungkan rvMahasiswa dengan recycler view yang ada pada layout
+        //menghubungkan rvMataPelajaran dengan recycler view yang ada pada layout
         val rvMataPelajaran: RecyclerView = view.findViewById(R.id.rv_mata_pelajaran)
 
         //set layout manager dari recycler view

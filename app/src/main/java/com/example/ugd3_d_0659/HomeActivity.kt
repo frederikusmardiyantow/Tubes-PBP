@@ -3,6 +3,7 @@ package com.example.ugd3_d_0659
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.DialogInterface
+import android.content.Intent
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -43,21 +44,27 @@ class HomeActivity : AppCompatActivity() {
                 .commit()
         }
     }
-/*
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         //disini kita menghubungkan menu yang telah kita buat dengan activity ini
         val manuInflater = MenuInflater(this)
-        menuInflater.inflate(R.menu.home_menu, menu)
+        menuInflater.inflate(R.menu.logout_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.menu_home){
+        if(item.itemId == R.id.menu_log_out){
             //jika menu yang dipilih adalah Mahasiswa maka ganti fragmentnya dengan fragment mahasiswa
-            changeFragment(FragmentHome())
-        }else if(item.itemId == R.id.menu_mata_pelajaran){
-            changeFragment(FragmentMataPelajaran())
+            val builder: AlertDialog.Builder = AlertDialog.Builder(this@HomeActivity)
+            builder.setMessage("Apakah kamu yakin ingin LogOut?")
+                .setPositiveButton("YES ", object : DialogInterface.OnClickListener{
+                    override fun onClick(dialogInterface: DialogInterface, i: Int){
+                        //keluar dari aplikasi
+                        finishAndRemoveTask()
+                    }
+                })
+                .show()
         }
         return super.onOptionsItemSelected(item)
-    }*/
+    }
 }

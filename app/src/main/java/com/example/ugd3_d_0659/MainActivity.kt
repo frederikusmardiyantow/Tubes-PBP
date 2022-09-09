@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         if(intent.getBundleExtra("login")!=null){
             getBundle()
             inputUsername.getEditText()?.setText(tempUsername)
+            inputPassword.getEditText()?.setText(tempPassword)
         }
 
         val btnRegis: Button = findViewById(R.id.btnRegistration)
