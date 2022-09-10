@@ -120,7 +120,7 @@ class RegistrationActivity : AppCompatActivity() {
 
         inputTextTLLangsung.setOnFocusChangeListener { view, b ->
             val datePicker= DatePickerDialog(this,DatePickerDialog.OnDateSetListener{view, year, month, dayOfMonth ->
-                inputTextTLLangsung.setText("${dayOfMonth}/${month}/${year}")
+                inputTextTLLangsung.setText("${dayOfMonth}/${(month.toInt()+1).toString()}/${year}")
 
             }, myYear, myMonth, myDay)
 
