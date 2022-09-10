@@ -1,12 +1,16 @@
 package com.example.ugd3_d_0659
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.CalendarView
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import java.util.*
 
 class RegistrationActivity : AppCompatActivity() {
     private lateinit var inputNama : TextInputLayout
@@ -16,10 +20,18 @@ class RegistrationActivity : AppCompatActivity() {
     private lateinit var inputConfirm : TextInputLayout
     private lateinit var inputTL : TextInputLayout
     private lateinit var inputTelepon : TextInputLayout
+    private lateinit var inputTextTLLangsung : TextInputEditText
     private lateinit var regisLayout: ConstraintLayout
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
+
+        val cal = Calendar.getInstance()
+        val myYear = cal.get(Calendar.YEAR)
+        val myDay = cal.get(Calendar.DAY_OF_MONTH)
+        val myMonth = cal.get(Calendar.MONTH)
 
         getSupportActionBar()?.hide()
 
@@ -31,6 +43,9 @@ class RegistrationActivity : AppCompatActivity() {
         inputTL = findViewById(R.id.inputLayoutTanggalLahir)
         inputTelepon = findViewById(R.id.inputLayoutTelepon)
         regisLayout =findViewById(R.id.regisLayout)
+        inputTextTLLangsung = findViewById(R.id.inputTextTanggalLahirLangsung)
+
+
         var btnBack: Button = findViewById(R.id.btnBack)
         var btnRegis: Button = findViewById(R.id.btnRegistration)
 
@@ -102,5 +117,18 @@ class RegistrationActivity : AppCompatActivity() {
             moveMain.putExtra("login", mBundle)
             startActivity(moveMain)
         })
+
+        inputTextTLLangsung.setOnFocusChangeListener { view, b ->
+            val datePicker= DatePickerDialog(this,DatePickerDialog.OnDateSetListener{view, year, month, dayOfMonth ->
+                inputTextTLLangsung.setText("${dayOfMonth}/${month}/${year}")
+
+            }, myYear, myMonth, myDay)
+
+            if(b){
+                datePicker.show()
+            }else{
+                datePicker.hide()
+            }
+        }
     }
 }
