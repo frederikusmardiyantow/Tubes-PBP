@@ -90,6 +90,18 @@ class RegistrationActivity : AppCompatActivity() {
                 checkRegis = false
             }
 
+            if(password.length!=8 || confirm.length!=8){
+                inputPasswordRegis.setError("Password harus 8 karakter!")
+                inputConfirm.setError("Password harus 8 karakter!")
+                checkRegis = false
+            }
+
+            if(confirm!=password){
+                inputPasswordRegis.setError("Password tidak sama!")
+                inputConfirm.setError("Password tidak sama!")
+                checkRegis = false
+            }
+
             if(tanggal.isEmpty()){
                 inputTL.setError("Tanggal lahir tidak boleh kosong")
                 checkRegis = false
@@ -100,12 +112,8 @@ class RegistrationActivity : AppCompatActivity() {
                 checkRegis = false
             }
 
-            if( password.compareTo(confirm)<0) {
-                inputConfirm.setError(" Password Salah")
-                checkRegis = false
-            }
-
-            if(nama.isNotEmpty() &&  username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && confirm.isNotEmpty() && tanggal.isNotEmpty() && telepon.isNotEmpty()){
+            if(nama.isNotEmpty() &&  username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && confirm.isNotEmpty() && password.length==8 && confirm.length==8
+                && confirm==password && tanggal.isNotEmpty() && telepon.isNotEmpty()){
                 checkRegis = true
             }
 
