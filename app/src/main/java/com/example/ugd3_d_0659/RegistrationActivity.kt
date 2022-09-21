@@ -4,32 +4,28 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.ugd3_d_0659.databinding.ActivityRegistrationBinding
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import java.util.*
 
 class RegistrationActivity : AppCompatActivity() {
-    private lateinit var inputNama : TextInputLayout
-    private lateinit var inputUsernameRegis : TextInputLayout
-    private lateinit var inputEmail : TextInputLayout
-    private lateinit var inputPasswordRegis : TextInputLayout
-    private lateinit var inputConfirm : TextInputLayout
-    private lateinit var inputTL : TextInputLayout
-    private lateinit var inputTelepon : TextInputLayout
-    private lateinit var inputTextTLLangsung : TextInputEditText
-    private lateinit var regisLayout: ConstraintLayout
-    var binding: ActivityRegistrationBinding? = null
+    //private lateinit var inputNama : TextInputLayout
+    //private lateinit var inputUsernameRegis : TextInputLayout
+    //private lateinit var inputEmail : TextInputLayout
+    //private lateinit var inputPasswordRegis : TextInputLayout
+    //private lateinit var inputConfirm : TextInputLayout
+    //private lateinit var inputTL : TextInputLayout
+    //private lateinit var inputTelepon : TextInputLayout
+    //private lateinit var inputTextTLLangsung : TextInputEditText
+    //private lateinit var regisLayout: ConstraintLayout
+    private lateinit var binding: ActivityRegistrationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_registration)
 
         binding = ActivityRegistrationBinding.inflate(layoutInflater)
-        setContentView(binding!!.root)
+        setContentView(binding.root)
 
 
         val cal = Calendar.getInstance()
@@ -49,69 +45,67 @@ class RegistrationActivity : AppCompatActivity() {
         //inputTextTLLangsung = findViewById(R.id.inputTextTanggalLahirLangsung)
 
 
-        var btnBack: Button = findViewById(R.id.btnBack)
-        var btnRegis: Button = findViewById(R.id.btnRegistration)
 
-        btnBack.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             val moveLogin = Intent(this@RegistrationActivity, MainActivity::class.java)
             startActivity(moveLogin)
         }
 
-        btnRegis.setOnClickListener(View.OnClickListener {
+        binding.btnRegistration.setOnClickListener(View.OnClickListener {
             var checkRegis = false
-            val nama : String = binding!!.inputLayoutNama.editText?.text.toString()
-            val username: String = binding!!.inputLayoutUsernameRegis.editText?.text.toString()
-            val email : String = binding!!.inputLayoutEmail.editText?.text.toString()
-            val password: String = binding!!.inputLayoutPasswordRegis.editText?.text.toString()
-            val confirm : String = binding!!.inputLayoutKonfirmPassword.editText?.text.toString()
-            val tanggal : String = binding!!.inputLayoutTanggalLahir.editText?.text.toString()
-            val telepon : String = binding!!.inputLayoutTelepon.editText?.text.toString()
+            val nama : String = binding.inputLayoutNama.editText?.text.toString()
+            val username: String = binding.inputLayoutUsernameRegis.editText?.text.toString()
+            val email : String = binding.inputLayoutEmail.editText?.text.toString()
+            val password: String = binding.inputLayoutPasswordRegis.editText?.text.toString()
+            val confirm : String = binding.inputLayoutKonfirmPassword.editText?.text.toString()
+            val tanggal : String = binding.inputLayoutTanggalLahir.editText?.text.toString()
+            val telepon : String = binding.inputLayoutTelepon.editText?.text.toString()
             val mBundle = Bundle()
 
             if(nama.isEmpty()){
-                inputNama.error = "Nama tidak boleh kosong"
+                binding.inputLayoutNama.error = "Nama tidak boleh kosong"
                 checkRegis = false
             }
 
             if(username.isEmpty()){
-                inputUsernameRegis.error = "Username tidak boleh kosong"
+                binding.inputLayoutUsernameRegis.error = "Username tidak boleh kosong"
                 checkRegis = false
             }
 
             if(email.isEmpty()){
-                inputEmail.error = "Email tidak boleh kosong"
+                binding.inputLayoutEmail.error = "Email tidak boleh kosong"
                 checkRegis = false
             }
 
             if(password.isEmpty()){
-                inputPasswordRegis.error = "Password tidak boleh kosong"
+                binding.inputLayoutPasswordRegis.error = "Password tidak boleh kosong"
                 checkRegis = false
             }
 
             if(confirm.isEmpty()){
-                inputConfirm.error = "Password tidak boleh kosong"
+                binding.inputLayoutKonfirmPassword.error = "Password tidak boleh kosong"
                 checkRegis = false
             }
 
             if(password.length!=8 || confirm.length!=8){
-                inputPasswordRegis.error = "Password harus 8 karakter!"
-                inputConfirm.error = "Password harus 8 karakter!"
+                binding.inputLayoutPasswordRegis.error = "Password harus 8 karakter!"
+                binding.inputLayoutKonfirmPassword.error = "Password harus 8 karakter!"
                 checkRegis = false
             }
 
             if(confirm!=password){
-                inputPasswordRegis.error = "Password tidak sama!"
-                inputConfirm.error = "Password tidak sama!"
+                binding.inputLayoutPasswordRegis.error = "Password tidak sama!"
+                binding.inputLayoutKonfirmPassword.error = "Password tidak sama!"
                 checkRegis = false
             }
 
             if(tanggal.isEmpty()){
-                inputTL.error = "Tanggal lahir tidak boleh kosong"
+                binding.inputLayoutTanggalLahir.error = "Tanggal lahir tidak boleh kosong"
                 checkRegis = false
             }
 
             if(telepon.isEmpty()){
-                inputTelepon.error = "Nomor telepon tidak boleh kosong"
+                binding.inputLayoutTelepon.error = "Nomor telepon tidak boleh kosong"
                 checkRegis = false
             }
 
@@ -129,9 +123,9 @@ class RegistrationActivity : AppCompatActivity() {
             startActivity(moveMain)
         })
 
-        inputTextTLLangsung.setOnFocusChangeListener { view, b ->
+        binding.inputTextTanggalLahirLangsung.setOnFocusChangeListener { view, b ->
             val datePicker= DatePickerDialog(this,DatePickerDialog.OnDateSetListener{view, year, month, dayOfMonth ->
-                inputTextTLLangsung.setText("${dayOfMonth}/${(month.toInt()+1)}/${year}")
+                binding.inputTextTanggalLahirLangsung.setText("${dayOfMonth}/${(month.toInt()+1)}/${year}")
 
             }, myYear, myMonth, myDay)
 
