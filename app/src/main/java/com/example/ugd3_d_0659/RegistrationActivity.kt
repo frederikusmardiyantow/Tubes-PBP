@@ -29,7 +29,7 @@ class RegistrationActivity : AppCompatActivity() {
         //setContentView(R.layout.activity_registration)
 
         binding = ActivityRegistrationBinding.inflate(layoutInflater)
-        setContentView(binding?.root)
+        setContentView(binding!!.root)
 
 
         val cal = Calendar.getInstance()
