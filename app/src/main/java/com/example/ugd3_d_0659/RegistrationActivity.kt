@@ -6,6 +6,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ugd3_d_0659.databinding.ActivityRegistrationBinding
+import com.example.ugd3_d_0659.room.User
+import com.example.ugd3_d_0659.room.UserDB
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.sql.Types.NULL
 import java.util.*
 
 class RegistrationActivity : AppCompatActivity() {
@@ -19,6 +25,8 @@ class RegistrationActivity : AppCompatActivity() {
     //private lateinit var inputTextTLLangsung : TextInputEditText
     //private lateinit var regisLayout: ConstraintLayout
     private lateinit var binding: ActivityRegistrationBinding
+    val db by lazy { UserDB(this) }
+    private var id: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +60,7 @@ class RegistrationActivity : AppCompatActivity() {
         }
 
         binding.btnRegistration.setOnClickListener(View.OnClickListener {
-            var checkRegis = false
+            var checkRegis = true
             val nama : String = binding.inputLayoutNama.editText?.text.toString()
             val username: String = binding.inputLayoutUsernameRegis.editText?.text.toString()
             val email : String = binding.inputLayoutEmail.editText?.text.toString()
@@ -65,59 +73,78 @@ class RegistrationActivity : AppCompatActivity() {
             if(nama.isEmpty()){
                 binding.inputLayoutNama.error = "Nama tidak boleh kosong"
                 checkRegis = false
+            } else {
+                binding.inputLayoutNama.error = null
             }
 
             if(username.isEmpty()){
                 binding.inputLayoutUsernameRegis.error = "Username tidak boleh kosong"
                 checkRegis = false
+            }else if(db.userDao().getUsername(username) != null) {
+                binding.inputLayoutUsernameRegis.error = "Username sudah digunakan"
+                checkRegis = false
+            } else {
+                binding.inputLayoutUsernameRegis.error = null
             }
 
             if(email.isEmpty()){
                 binding.inputLayoutEmail.error = "Email tidak boleh kosong"
                 checkRegis = false
+            } else {
+                binding.inputLayoutEmail.error = null
             }
 
             if(password.isEmpty()){
                 binding.inputLayoutPasswordRegis.error = "Password tidak boleh kosong"
                 checkRegis = false
+            } else {
+                binding.inputLayoutPasswordRegis.error = null
             }
 
             if(confirm.isEmpty()){
                 binding.inputLayoutKonfirmPassword.error = "Password tidak boleh kosong"
                 checkRegis = false
+            } else {
+                binding.inputLayoutKonfirmPassword.error = null
             }
 
             if(password.length!=8 || confirm.length!=8){
                 binding.inputLayoutPasswordRegis.error = "Password harus 8 karakter!"
                 binding.inputLayoutKonfirmPassword.error = "Password harus 8 karakter!"
                 checkRegis = false
-            }
-
-            if(confirm!=password){
+            }else if(confirm!=password){
                 binding.inputLayoutPasswordRegis.error = "Password tidak sama!"
                 binding.inputLayoutKonfirmPassword.error = "Password tidak sama!"
                 checkRegis = false
+            } else {
+                binding.inputLayoutPasswordRegis.error = null
+                binding.inputLayoutKonfirmPassword.error = null
             }
 
             if(tanggal.isEmpty()){
                 binding.inputLayoutTanggalLahir.error = "Tanggal lahir tidak boleh kosong"
                 checkRegis = false
+            } else {
+                binding.inputLayoutTanggalLahir.error = null
             }
 
             if(telepon.isEmpty()){
                 binding.inputLayoutTelepon.error = "Nomor telepon tidak boleh kosong"
                 checkRegis = false
+            } else {
+                binding.inputLayoutTelepon.error = null
             }
 
-            if(nama.isNotEmpty() &&  username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && confirm.isNotEmpty() && password.length==8 && confirm.length==8
-                && confirm==password && tanggal.isNotEmpty() && telepon.isNotEmpty()){
-                checkRegis = true
+            if(checkRegis == true){
+                db.userDao().addUser(
+                    User(0,nama,username,email,password,tanggal,telepon)
+                )
             }
 
             mBundle.putString("username",username)
             mBundle.putString("password",password)
 
-            if(!checkRegis) return@OnClickListener
+            if(checkRegis == false) return@OnClickListener
             val moveMain = Intent(this@RegistrationActivity, MainActivity::class.java)
             moveMain.putExtra("login", mBundle)
             startActivity(moveMain)

@@ -1,19 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".FragmentHome"
     android:background="@color/utama">
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/hallo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ini Menu Home Nantinya"
-        android:layout_marginTop="150dp"
-        android:layout_marginStart="130dp"/>
-</FrameLayout>
+        android:text="Halo,"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"/>
+    <TextView
+        android:id="@+id/nama"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nama User disini"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@+id/hallo"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="20dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="195dp"
+        android:layout_marginTop="20dp"
+        android:background="#FFFEDE"
+        android:orientation="horizontal"
+        android:outlineAmbientShadowColor="@color/black"
+        android:outlineSpotShadowColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nama"
+        app:layout_constraintVertical_bias="0.0">
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
