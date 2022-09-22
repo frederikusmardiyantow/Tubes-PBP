@@ -19,8 +19,6 @@ class HomeActivity : AppCompatActivity() {
         val bottomNav: BottomNavigationView = findViewById(R.id.bottom_navigation)
         setTitle("Bisa Belajar")
 
-        changeFragment(FragmentHome())
-
         bottomNav.setOnItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.menu_home -> {
@@ -34,6 +32,11 @@ class HomeActivity : AppCompatActivity() {
                 else -> false
             }
         }
+        val intent: Intent = intent
+        val bundle = intent.getBundleExtra("login_success")
+        val mFragmentHome: Fragment = FragmentHome()
+        mFragmentHome.arguments = bundle
+        changeFragment(mFragmentHome)
     }
 
     fun changeFragment(fragment: Fragment?){
