@@ -5,10 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ugd3_d_0659.entity.MataPelajaran
-import java.text.FieldPosition
 
 class RVMataPelajaranAdapter (private  val data: Array<MataPelajaran>) : RecyclerView.Adapter<RVMataPelajaranAdapter.viewHolder>(){
 
@@ -34,4 +32,6 @@ class RVMataPelajaranAdapter (private  val data: Array<MataPelajaran>) : Recycle
         val tvPengajar : TextView = itemView.findViewById(R.id.tv_pengajar)
         val tvGambar : ImageView = itemView.findViewById(R.id.tv_gambar)
     }
+
+
 }
