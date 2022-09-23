@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:id="@+id/mainLayout"
-    android:background="#F4E9C5">
+    android:background="@color/utama">
 
     <ImageView
         android:id="@+id/imageView"
@@ -90,14 +90,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Registration" />
+            android:text="Registration"
+            android:textColor="@color/black"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Login" />
+            android:text="Login"
+            android:textColor="@color/black"/>
     </LinearLayout>
 
 

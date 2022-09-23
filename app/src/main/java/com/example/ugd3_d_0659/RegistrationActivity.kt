@@ -8,10 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.ugd3_d_0659.databinding.ActivityRegistrationBinding
 import com.example.ugd3_d_0659.room.User
 import com.example.ugd3_d_0659.room.UserDB
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.sql.Types.NULL
 import java.util.*
 
 class RegistrationActivity : AppCompatActivity() {
