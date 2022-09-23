@@ -13,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 
 class HomeActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -27,6 +28,10 @@ class HomeActivity : AppCompatActivity() {
                 }
                 R.id.menu_mata_pelajaran -> {
                     changeFragment(FragmentMataPelajaran())
+                    true
+                }
+                R.id.menu_profil -> {
+                    changeFragment(FragmentProfil())
                     true
                 }
                 else -> false

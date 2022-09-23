@@ -9,20 +9,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import com.example.ugd3_d_0659.room.User
+import com.example.ugd3_d_0659.room.UserDB
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class FragmentHome : Fragment() {
-    private var username : String = ""
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        arguments?.let{
-            username = it.getString("username").toString()
-        }
-    }
+    private lateinit var nama : TextView
+    private lateinit var user : User
+    private val myPreference = "myPref"
+    private val id = "nameKey"
+    var sharedPreferences: SharedPreferences? = null
+    val db by lazy { activity?.let { UserDB(it) } }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,16 +33,15 @@ class FragmentHome : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedPreferences = activity?.getSharedPreferences(myPreference, Context.MODE_PRIVATE)
 
-        val getNama : TextView = view.findViewById(R.id.nama)!!
-        getNama.setText(username)
-//        if (arguments != null) {
-//            val massege : String? = getArguments()?.getString(EXTRA_TITLE)
-//            println("isi extra : "+ EXTRA_TITLE)
-//            println("isi massage : "+massege)
-//            val getNama : TextView = view.findViewById(R.id.nama)
-//            getNama.setText("haloooo")
-//        }
+        val id = sharedPreferences!!.getInt(id,0)
+
+        nama = view.findViewById(R.id.nama)
+
+        user = db?.userDao()?.getUser(id)?.get(0)!!
+
+        nama.text = user.nama
 
 
     }
