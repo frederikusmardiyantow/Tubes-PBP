@@ -4,7 +4,6 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/drawable/ic_profil.xml" value="0.1945" />
-        <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/layout/activity_home.xml" value="0.2" />
         <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/layout/activity_main.xml" value="0.25833333333333336" />
         <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/layout/activity_profil.xml" value="0.15534420289855072" />
         <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/layout/activity_registration.xml" value="0.25833333333333336" />
@@ -23,10 +22,8 @@
         <entry key="..\:/AndroidStudioProjects/UGD3_D_0659/app/src/main/res/drawable/ic_password_24.xml" value="0.2265" />
         <entry key="..\:/AndroidStudioProjects/UGD3_D_0659/app/src/main/res/layout/activity_home.xml" value="0.14492753623188406" />
         <entry key="..\:/AndroidStudioProjects/UGD3_D_0659/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
-        <entry key="..\:/AndroidStudioProjects/UGD3_D_0659/app/src/main/res/layout/activity_note_adapter.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/UGD3_D_0659/app/src/main/res/layout/activity_registration.xml" value="0.2346014492753623" />
         <entry key="..\:/AndroidStudioProjects/UGD3_D_0659/app/src/main/res/layout/activity_splash_screen.xml" value="0.25" />
-        <entry key="..\:/AndroidStudioProjects/UGD3_D_0659/app/src/main/res/layout/fragment_edit_profil.xml" value="0.1671195652173913" />
         <entry key="..\:/AndroidStudioProjects/UGD3_D_0659/app/src/main/res/layout/fragment_home.xml" value="0.2346014492753623" />
         <entry key="..\:/AndroidStudioProjects/UGD3_D_0659/app/src/main/res/layout/fragment_mata_pelajaran.xml" value="0.14492753623188406" />
         <entry key="..\:/AndroidStudioProjects/UGD3_D_0659/app/src/main/res/layout/fragment_registrasi.xml" value="0.2346014492753623" />
@@ -34,6 +31,8 @@
         <entry key="..\:/AndroidStudioProjects/UGD3_D_0659/app/src/main/res/menu/home_menu.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/UGD3_D_0659/app/src/main/res/menu/logout_menu.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/UGD3_D_0659/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.212" />
+        <entry key="..\:/Users/EDMOND/AndroidStudioProjects/Tubes-PBP/app/src/main/res/drawable/ic_nama_24.xml" value="0.1925" />
+        <entry key="..\:/Users/EDMOND/AndroidStudioProjects/Tubes-PBP/app/src/main/res/drawable/ic_profil.xml" value="0.1925" />
         <entry key="..\:/Users/EDMOND/AndroidStudioProjects/Tubes-PBP/app/src/main/res/layout/activity_edit_note.xml" value="0.1" />
         <entry key="..\:/Users/EDMOND/AndroidStudioProjects/Tubes-PBP/app/src/main/res/layout/activity_home.xml" value="0.15" />
         <entry key="..\:/Users/EDMOND/AndroidStudioProjects/Tubes-PBP/app/src/main/res/layout/activity_menu_note.xml" value="0.1" />
