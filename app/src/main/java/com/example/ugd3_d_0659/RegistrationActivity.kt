@@ -1,10 +1,20 @@
 package com.example.ugd3_d_0659
 
 import android.app.DatePickerDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.example.ugd3_d_0659.databinding.ActivityRegistrationBinding
 import com.example.ugd3_d_0659.room.User
 import com.example.ugd3_d_0659.room.UserDB
@@ -21,6 +31,8 @@ class RegistrationActivity : AppCompatActivity() {
     //private lateinit var inputTextTLLangsung : TextInputEditText
     //private lateinit var regisLayout: ConstraintLayout
     private lateinit var binding: ActivityRegistrationBinding
+    private val CHANNEL_ID = "channel_notification"
+    private val notification = 101
     val db by lazy { UserDB(this) }
     private var id: Int = 0
 
@@ -30,7 +42,7 @@ class RegistrationActivity : AppCompatActivity() {
 
         binding = ActivityRegistrationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        createNotificationChannel()
 
         val cal = Calendar.getInstance()
         val myYear = cal.get(Calendar.YEAR)
@@ -143,6 +155,7 @@ class RegistrationActivity : AppCompatActivity() {
             if(checkRegis == false) return@OnClickListener
             val moveMain = Intent(this@RegistrationActivity, MainActivity::class.java)
             moveMain.putExtra("login", mBundle)
+            sendNotification()
             startActivity(moveMain)
         })
 
@@ -157,6 +170,46 @@ class RegistrationActivity : AppCompatActivity() {
             }else{
                 datePicker.hide()
             }
+        }
+    }
+
+    private fun sendNotification() {
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this,0,intent,0)
+        val broadcastIntent: Intent = Intent(this, NotificationReceiver::class.java)
+        broadcastIntent.putExtra("toastMessage", binding.inputLayoutUsernameRegis.editText?.text.toString())
+        val actionIntent= PendingIntent.getBroadcast(this,0,broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val largeIcon : Bitmap = BitmapFactory.decodeResource(resources, R.drawable.congrat)
+
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_profil)
+            .setContentTitle("Berhasil Registrasi!!!")
+            .setContentText(binding.inputLayoutUsernameRegis.editText?.text.toString())
+            .setLargeIcon(largeIcon)
+            .setStyle(NotificationCompat.BigPictureStyle().bigPicture(largeIcon).bigLargeIcon(null))
+            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+            .setColor(Color.BLUE)
+            .setAutoCancel(true)
+            .setOnlyAlertOnce(true)
+            .setContentIntent(pendingIntent)
+            .addAction(R.mipmap.ic_launcher,"Toast", actionIntent)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        with(NotificationManagerCompat.from(this)){
+            notify(notification, builder.build())
+        }
+    }
+
+    private fun createNotificationChannel() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val name = "Notification Title"
+            val descriptionText = "Notofication Description"
+
+            val channel = NotificationChannel(CHANNEL_ID,name, NotificationManager.IMPORTANCE_DEFAULT).apply {
+                description = descriptionText
+            }
+
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
         }
     }
 }
