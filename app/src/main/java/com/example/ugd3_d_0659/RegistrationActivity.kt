@@ -174,10 +174,10 @@ class RegistrationActivity : AppCompatActivity() {
     }
 
     private fun sendNotification() {
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(this,0,intent,0)
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_MUTABLE)
         val broadcastIntent: Intent = Intent(this, NotificationReceiver::class.java)
         broadcastIntent.putExtra("toastMessage", binding.inputLayoutUsernameRegis.editText?.text.toString())
-        val actionIntent= PendingIntent.getBroadcast(this,0,broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val actionIntent= PendingIntent.getBroadcast(this,0,broadcastIntent, PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val largeIcon : Bitmap = BitmapFactory.decodeResource(resources, R.drawable.congrat)
 
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
