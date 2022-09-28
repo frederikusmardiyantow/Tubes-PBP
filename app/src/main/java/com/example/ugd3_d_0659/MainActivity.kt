@@ -40,10 +40,6 @@ class MainActivity : AppCompatActivity() {
         inputPassword= findViewById(R.id.inputLayoutPassword)
         mainLayout= findViewById(R.id.mainLayout)
 
-        db.userDao().addUser(
-            User(0, "admin", "admin", "admin", "admin", "11/11/2000", "085701160012")
-        )
-
         if(sharedPreferences!=null){
             val usernameLogin = sharedPreferences!!.getString(user,"")
             val passwordLogin = sharedPreferences!!.getString(pass,"")
