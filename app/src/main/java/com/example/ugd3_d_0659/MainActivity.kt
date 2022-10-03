@@ -15,15 +15,17 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import com.example.ugd3_d_0659.databinding.ActivityMainBinding
+import com.example.ugd3_d_0659.databinding.ActivityRegistrationBinding
 import com.example.ugd3_d_0659.room.User
 import com.example.ugd3_d_0659.room.UserDB
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var inputUsername: TextInputLayout
-    private lateinit var inputPassword: TextInputLayout
-    private lateinit var mainLayout: ConstraintLayout
+    //private lateinit var inputUsername: TextInputLayout
+    //private lateinit var inputPassword: TextInputLayout
+    //private lateinit var mainLayout: ConstraintLayout
     var mBundle: Bundle? = null
     var tempUsername: String = "admin"
     var tempPassword: String = "admin"
@@ -32,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     private val id = "nameKey"
     private val user = "userLogin"
     private val pass = "passLogin"
+    private lateinit var binding: ActivityMainBinding
     var sharedPreferences: SharedPreferences? = null
     val db by lazy { UserDB(this) }
 
@@ -40,7 +43,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        //setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         notificationManager =
             getSystemService(
@@ -56,36 +61,36 @@ class MainActivity : AppCompatActivity() {
 
         getSupportActionBar()?.hide()
 
-        inputUsername = findViewById(R.id.inputLayoutUsername)
-        inputPassword = findViewById(R.id.inputLayoutPassword)
-        mainLayout = findViewById(R.id.mainLayout)
+        //inputUsername = findViewById(R.id.inputLayoutUsername)
+        //inputPassword = findViewById(R.id.inputLayoutPassword)
+        //mainLayout = findViewById(R.id.mainLayout)
 
         if (sharedPreferences != null) {
             val usernameLogin = sharedPreferences!!.getString(user, "")
             val passwordLogin = sharedPreferences!!.getString(pass, "")
 
-            inputUsername.getEditText()?.setText(usernameLogin)
-            inputPassword.getEditText()?.setText(passwordLogin)
+            binding.inputLayoutUsername.getEditText()?.setText(usernameLogin)
+            binding.inputLayoutPassword.getEditText()?.setText(passwordLogin)
         }
 
         if (intent.getBundleExtra("login") != null) {
             getBundle()
-            inputUsername.getEditText()?.setText(tempUsername)
-            inputPassword.getEditText()?.setText(tempPassword)
+            binding.inputLayoutUsername.getEditText()?.setText(tempUsername)
+            binding.inputLayoutPassword.getEditText()?.setText(tempPassword)
         }
 
-        val btnRegis: Button = findViewById(R.id.btnRegistration)
-        val btnLogin: Button = findViewById(R.id.btnLogin)
+        //val btnRegis: Button = findViewById(R.id.btnRegistration)
+        //val btnLogin: Button = findViewById(R.id.btnLogin)
 
-        btnRegis.setOnClickListener {
+        binding.btnRegistration.setOnClickListener {
             val intent = Intent(this@MainActivity, RegistrationActivity::class.java)
             startActivity(intent)
         }
 
-        btnLogin.setOnClickListener(View.OnClickListener {
+        binding.btnLogin.setOnClickListener(View.OnClickListener {
             var checkLogin = false
-            var username: String = inputUsername.getEditText()?.getText().toString()
-            var password: String = inputPassword.getEditText()?.getText().toString()
+            var username: String = binding.inputLayoutUsername.getEditText()?.getText().toString()
+            var password: String = binding.inputLayoutPassword.getEditText()?.getText().toString()
             sharedPreferences = getSharedPreferences(
                 myPreference,
                 Context.MODE_PRIVATE
@@ -106,17 +111,17 @@ class MainActivity : AppCompatActivity() {
             }
 
             if (username.isEmpty()) {
-                inputUsername.setError("Username must be filled with text!")
+                binding.inputLayoutUsername.setError("Username must be filled with text!")
                 checkLogin = false
             } else {
-                inputUsername.error = null
+                binding.inputLayoutUsername.error = null
             }
 
             if (password.isEmpty()) {
-                inputPassword.setError("Password must be filled with text")
+                binding.inputLayoutPassword.setError("Password must be filled with text")
                 checkLogin = false
             } else {
-                inputPassword.error = null
+                binding.inputLayoutPassword.error = null
             }
 
             if ((username == tempUsername && password == tempPassword)) {
@@ -137,7 +142,7 @@ class MainActivity : AppCompatActivity() {
                         .getUserLogin(username, password) == null
                 ) {
                     Snackbar.make(
-                        mainLayout,
+                        binding.mainLayout,
                         "Login Invalid! Check your input Username and Password",
                         Snackbar.LENGTH_LONG
                     ).show()
