@@ -4,16 +4,22 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/drawable/ic_profil.xml" value="0.1945" />
+        <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/layout/activity_home.xml" value="0.1" />
         <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/layout/activity_main.xml" value="0.25833333333333336" />
+        <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/layout/activity_menu_note.xml" value="0.25833333333333336" />
+        <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/layout/activity_note_adapter.xml" value="0.25833333333333336" />
         <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/layout/activity_profil.xml" value="0.15534420289855072" />
         <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/layout/activity_registration.xml" value="0.25833333333333336" />
         <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/layout/activity_splash_screen.xml" value="0.25833333333333336" />
+        <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/layout/fragment_capaian.xml" value="0.25833333333333336" />
         <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/layout/fragment_home.xml" value="0.25833333333333336" />
         <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/layout/fragment_jhbkjjkj.xml" value="0.1" />
         <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/layout/fragment_mata_pelajaran.xml" value="0.25833333333333336" />
+        <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/layout/fragment_peserta.xml" value="0.25833333333333336" />
         <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/layout/fragment_profil.xml" value="0.1" />
         <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/layout/rv_item_mata_pelajaran.xml" value="0.25833333333333336" />
         <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/layout/rv_profil.xml" value="0.1" />
+        <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/Tubes-PBP-Kelompok-9-Kelas-D-/app/src/main/res/menu/home_menu.xml" value="0.25833333333333336" />
         <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/UGD_D_Kelompok9/app/src/main/res/drawable/ic_calendar_24.xml" value="0.254" />
         <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/UGD_D_Kelompok9/app/src/main/res/layout/activity_main.xml" value="0.25833333333333336" />
         <entry key="..\:/1 KULIAH/Sem 5/PBP/Praktikum/File/UGD_D_Kelompok9/app/src/main/res/layout/activity_registration.xml" value="0.25833333333333336" />

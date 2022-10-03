@@ -33,6 +33,10 @@ class HomeActivity : AppCompatActivity() {
                     changeFragment(FragmentProfil())
                     true
                 }
+                R.id.menu_capaian -> {
+                    changeFragment(FragmentCapaian())
+                    true
+                }
                 else -> false
             }
         }
