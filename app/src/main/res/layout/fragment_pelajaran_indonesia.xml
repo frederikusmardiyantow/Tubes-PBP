@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view_binding_pelajaran.Materi"
+    android:background="@color/utama">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_judul_ayo_belajar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AYO BELAJAR"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_mata_pelajaran_di_ayo_belajar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mata Pelajaran   :"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_judul_ayo_belajar"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_isi_mata_pelajaran_di_ayo_belajar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama Mata Pelajaran"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/tv_mata_pelajaran_di_ayo_belajar"
+            app:layout_constraintTop_toBottomOf="@+id/tv_judul_ayo_belajar"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_kelas_di_ayo_belajar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kelas                    :"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_mata_pelajaran_di_ayo_belajar"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_isi_kelas_di_ayo_belajar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kelas disini"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/tv_isi_mata_pelajaran_di_ayo_belajar"
+            app:layout_constraintTop_toBottomOf="@+id/tv_isi_mata_pelajaran_di_ayo_belajar"
+            android:layout_marginTop="6dp"/>
+
+        <TextView
+            android:id="@+id/tv_pengajar_di_ayo_belajar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pengajar              :"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_kelas_di_ayo_belajar"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_isi_pengajar_di_ayo_belajar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama Pengajar"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/tv_isi_kelas_di_ayo_belajar"
+            app:layout_constraintTop_toBottomOf="@+id/tv_isi_kelas_di_ayo_belajar"
+            android:layout_marginTop="6dp"/>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_isi_pengajar_di_ayo_belajar"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/materi_rv"
+            android:layout_width="match_parent"
+            android:layout_height="469dp"
+            android:layout_marginTop="10dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider"
+            tools:listitem="@layout/rv_item_pelajaran_indonesia"
+            tools:viewBindingIgnore="true" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>
