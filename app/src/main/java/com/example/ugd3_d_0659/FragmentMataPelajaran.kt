@@ -1,5 +1,6 @@
 package com.example.ugd3_d_0659
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ugd3_d_0659.entity.MataPelajaran
+import kotlinx.android.synthetic.main.rv_item_mata_pelajaran.*
 
 class FragmentMataPelajaran : Fragment() {
 
@@ -35,5 +37,13 @@ class FragmentMataPelajaran : Fragment() {
 
         //set adapter dari recycler view
         rvMataPelajaran.adapter = adapter
+
+        adapter.onItemClick = {
+            var mFragmentKelas = FragmentKelasIndonesia()
+
+            (activity as HomeActivity).changeFragment(mFragmentKelas)
+
+        }
     }
 }
+
