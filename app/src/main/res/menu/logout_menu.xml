@@ -6,6 +6,10 @@
         android:enabled="true"
         android:title="Note"/>
     <item
+        android:id="@+id/camera"
+        android:enabled="true"
+        android:title="Camera"/>
+    <item
         android:id="@+id/menu_log_out"
         android:enabled="true"
         android:title="Log Out"/>
