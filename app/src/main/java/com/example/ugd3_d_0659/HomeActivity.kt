@@ -64,17 +64,20 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.menu_log_out){
+        if(item.itemId == R.id.menu_log_out) {
             //jika menu yang dipilih adalah Mahasiswa maka ganti fragmentnya dengan fragment mahasiswa
             val builder: AlertDialog.Builder = AlertDialog.Builder(this@HomeActivity)
             builder.setMessage("Apakah kamu yakin ingin LogOut?")
-                .setPositiveButton("YES ", object : DialogInterface.OnClickListener{
-                    override fun onClick(dialogInterface: DialogInterface, i: Int){
+                .setPositiveButton("YES ", object : DialogInterface.OnClickListener {
+                    override fun onClick(dialogInterface: DialogInterface, i: Int) {
                         //keluar dari aplikasi
                         finishAndRemoveTask()
                     }
                 })
                 .show()
+        }else if(item.itemId == R.id.camera){
+            val intent = Intent(this, CameraActivity::class.java)
+            startActivity(intent)
         }else{
             val intent = Intent(this, MenuNote::class.java)
             startActivity(intent)
