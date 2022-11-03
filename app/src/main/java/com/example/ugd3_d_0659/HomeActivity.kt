@@ -75,9 +75,6 @@ class HomeActivity : AppCompatActivity() {
                     }
                 })
                 .show()
-        }else if(item.itemId == R.id.camera){
-            val intent = Intent(this, CameraActivity::class.java)
-            startActivity(intent)
         }else{
             val intent = Intent(this, MenuNote::class.java)
             startActivity(intent)
