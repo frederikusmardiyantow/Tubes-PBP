@@ -1,6 +1,7 @@
 package com.example.ugd3_d_0659
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -61,6 +62,13 @@ class FragmentProfil : Fragment() {
 
             (activity as HomeActivity).changeFragment(mFragmentEditProfil)
         })
+
+        imageProfil.setOnClickListener {
+            requireActivity().run{
+                val intent = Intent(this, CameraActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 
 }
