@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.fragment_profil.*
 
 class HomeActivity : AppCompatActivity() {
 
@@ -37,6 +38,10 @@ class HomeActivity : AppCompatActivity() {
                     changeFragment(FragmentCapaian())
                     true
                 }
+                R.id.menu_maps ->{
+                    true
+                }
+
                 else -> false
             }
         }
@@ -45,6 +50,8 @@ class HomeActivity : AppCompatActivity() {
         val mFragmentHome: Fragment = FragmentHome()
         mFragmentHome.arguments = bundle
         changeFragment(mFragmentHome)
+
+
     }
 
     fun changeFragment(fragment: Fragment?){
@@ -55,6 +62,7 @@ class HomeActivity : AppCompatActivity() {
                 .commit()
         }
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         //disini kita menghubungkan menu yang telah kita buat dengan activity ini
