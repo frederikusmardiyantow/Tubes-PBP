@@ -1,10 +1,11 @@
-package com.example.ugd3_d_0659
+package com.example.ugd3_d_0659.maps
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.ugd3_d_0659.maps.ModelMain
+import com.example.ugd3_d_0659.R
 import kotlinx.android.synthetic.main.activity_maps.*
 import org.json.JSONException
 import org.json.JSONObject

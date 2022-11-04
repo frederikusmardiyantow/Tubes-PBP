@@ -1,5 +1,7 @@
-package com.example.ugd3_d_0659
+package com.example.ugd3_d_0659.maps
 
+import com.example.ugd3_d_0659.maps.ModelMain
+import com.example.ugd3_d_0659.R
 import kotlinx.android.synthetic.main.layout_tooltip.view.*
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
