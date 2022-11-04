@@ -1,0 +1,28 @@
+{
+  "results": [
+    {
+      "geometry": {
+        "location" : {
+          "lat": -7.779433,
+          "lng": 110.415782
+        }
+      },
+      "name": "Kampus 3 Universitas Atma Jaya Yogyakarta",
+      "vicinity": "Jl. Babarsari No.43, Janti, Canturtunggal, Kec. Depok, Kabupaten Sleman, Yogyakarta"
+    }
+  ],
+  "result": [
+    {
+      "geometry": {
+        "location" : {
+          "lat": -7.776196,
+          "lng": 110.392706
+        }
+      },
+      "name": "Kampus 1 Universitas Atma Jaya Yogyakarta",
+      "vicinity": "Jl. Mrican Baru No.28, RW.02, Mrican, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta"
+    }
+  ],
+  "status": "OK"
+}
+

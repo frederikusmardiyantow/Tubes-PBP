@@ -21,4 +21,10 @@
         android:icon="@drawable/ic_profil_24"
         android:title="Profil"/>
 
+    <item
+        android:id="@+id/menu_maps"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_location_on_24"
+        android:title="Map"/>
+
 </menu>
