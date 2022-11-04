@@ -9,6 +9,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.ugd3_d_0659.maps.MapsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_profil.*
 
@@ -39,6 +40,8 @@ class HomeActivity : AppCompatActivity() {
                     true
                 }
                 R.id.menu_maps ->{
+                    val intent = Intent(this, MapsActivity::class.java)
+                    startActivity(intent)
                     true
                 }
 
