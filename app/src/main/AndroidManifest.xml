@@ -10,6 +10,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/logoproject_hitam"
         android:label="Bisa Belajar"
+        android:usesCleartextTraffic="true"
         android:roundIcon="@drawable/logoproject_hitam"
         android:supportsRtl="true"
         android:theme="@style/Theme.UGD3_D_0659"

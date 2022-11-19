@@ -3,93 +3,155 @@ package com.example.ugd3_d_0659
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AlertDialog
+import android.view.View
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.ugd3_d_0659.room.Constant
-import com.example.ugd3_d_0659.room.Note
-import com.example.ugd3_d_0659.room.NoteDB
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.android.volley.AuthFailureError
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.example.ugd3_d_0659.adapters.NoteAdapter
+import com.example.ugd3_d_0659.api.NoteApi
+import com.example.ugd3_d_0659.models.Note
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_menu_note.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import org.json.JSONObject
+import java.nio.charset.StandardCharsets
 
 class MenuNote : AppCompatActivity() {
-    val db by lazy { NoteDB(this) }
-    lateinit var noteAdapter: NoteAdapter
+    private var layoutLoading: LinearLayout? = null
+    private var queue: RequestQueue? = null
+    private var srNote : SwipeRefreshLayout? = null
+    private var svNote : SearchView? = null
+    private var adapter : NoteAdapter? = null
+    companion object{
+        const val LAUNCH_ADD_ACTIVITY = 123
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_note)
-        setupListener()
-        setupRecyclerView()
-    }
+        queue = Volley.newRequestQueue(this)
+        layoutLoading = findViewById(R.id.layout_loading)
+        srNote = findViewById(R.id.sr_note)
+        svNote = findViewById(R.id.sv_note)
 
-    private fun setupRecyclerView() {
-        noteAdapter = NoteAdapter(arrayListOf(), object :
-            NoteAdapter.OnAdapterListener{
-            override fun onClick(note: Note) {
-                intentEdit(note.id,Constant.TYPE_READ)
+        srNote?.setOnRefreshListener ( SwipeRefreshLayout.OnRefreshListener{ allNote() } )
+        svNote?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(s: String): Boolean {
+                return false
             }
-            override fun onUpdate(note: Note) {
-                intentEdit(note.id, Constant.TYPE_UPDATE)
-            }
-            override fun onDelete(note: Note) {
-                deleteDialog(note)
+
+            override fun onQueryTextChange(s: String): Boolean {
+                adapter!!.filter.filter(s)
+                return false
             }
         })
-        list_note.apply {
-            layoutManager = LinearLayoutManager(applicationContext)
-            adapter = noteAdapter
+
+        val btnCreate = findViewById<Button>(R.id.button_create)
+        btnCreate.setOnClickListener{
+            val i = Intent(this@MenuNote, EditNoteActivity::class.java)
+            startActivityForResult(i, LAUNCH_ADD_ACTIVITY)
         }
-    }
-    private fun deleteDialog(note: Note){
-        val alertDialog = AlertDialog.Builder(this)
-        alertDialog.apply {
-            setTitle("Confirmation")
-            setMessage("Are You Sure to delete this data From ${note.title}?")
-            setNegativeButton("Cancel", DialogInterface.OnClickListener
-            { dialogInterface, i ->
-                dialogInterface.dismiss()
-            })
-            setPositiveButton("Delete", DialogInterface.OnClickListener
-            { dialogInterface, i ->
-                dialogInterface.dismiss()
-                CoroutineScope(Dispatchers.IO).launch {
-                    db.noteDao().deleteNote(note)
-                    loadData()
-                }
-            })
-        }
-        alertDialog.show()
-    }
-    override fun onStart() {
-        super.onStart()
-        loadData()
+        val rvProduk = findViewById<RecyclerView>(R.id.rv_note)
+        adapter = NoteAdapter(ArrayList(), this)
+        rvProduk.layoutManager = LinearLayoutManager(this)
+        rvProduk.adapter = adapter
+        allNote()
     }
 
-    fun loadData() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val notes = db.noteDao().getNotes()
-            Log.d("MainActivity","dbResponse: $notes")
-            withContext(Dispatchers.Main){
-                noteAdapter.setData( notes )
+    private fun allNote() {
+        srNote!!.isRefreshing = true
+        val stringRequest: StringRequest = object :
+            StringRequest(Method.GET, NoteApi.GET_ALL_URL, Response.Listener { response ->
+                val gson = Gson()
+                var note : Array<Note> = gson.fromJson(response, Array<Note>::class.java)
+
+                adapter!!.setNoteList(note)
+                adapter!!.filter.filter(svNote!!.query)
+                srNote!!.isRefreshing = false
+                if (!note.isEmpty())
+                    Toast.makeText(this@MenuNote, "Data Berhasil Diambil", Toast.LENGTH_SHORT).show()
+                else
+                    Toast.makeText(this@MenuNote, "Data Kosong", Toast.LENGTH_SHORT).show()
+            }, Response.ErrorListener { error ->
+                srNote!!.isRefreshing = false
+                try {
+                    val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+                    val errors = JSONObject(responseBody)
+                    Toast.makeText(this@MenuNote, errors.getString("message"), Toast.LENGTH_SHORT
+                    ).show()
+                }catch (e: Exception){
+                    Toast.makeText(this@MenuNote, e.message, Toast.LENGTH_SHORT).show()
+                }
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Accept"] = "application/json"
+                return headers
             }
         }
+        queue!!.add(stringRequest)
     }
-    fun setupListener() {
-        button_create.setOnClickListener{
-            intentEdit(0,Constant.TYPE_CREATE)
+
+    fun deleteNote(id:Long){
+        setLoading(true)
+        val stringRequest: StringRequest = object :
+            StringRequest(Method.DELETE, NoteApi.DELETE_URL + id, Response.Listener { response ->
+                setLoading(false)
+                val gson = Gson()
+                var note = gson.fromJson(response, Note::class.java)
+
+                if (note != null)
+                    Toast.makeText(this@MenuNote, "Data Berhasil Dihapus", Toast.LENGTH_SHORT).show()
+
+                allNote()
+            }, Response.ErrorListener { error ->
+                setLoading(false)
+                try {
+                    val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+                    val errors = JSONObject(responseBody)
+                    Toast.makeText(this@MenuNote, errors.getString("message"), Toast.LENGTH_SHORT
+                    ).show()
+                }catch (e: Exception){
+                    Toast.makeText(this@MenuNote, e.message, Toast.LENGTH_SHORT).show()
+                }
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Accept"] = "application/json"
+                return headers
+            }
+        }
+        queue!!.add(stringRequest)
+    }
+
+    private fun setLoading(isLoading: Boolean) {
+        if (isLoading){
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+            )
+            layoutLoading!!.visibility = View.VISIBLE
+        }else{
+            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            layoutLoading!!.visibility = View.GONE
         }
     }
-    //pick data dari Id yang sebagai primary key
-    fun intentEdit(noteId : Int, intentType: Int){
-        startActivity(
-            Intent(applicationContext, EditNoteActivity::class.java)
-                .putExtra("intent_id", noteId)
-                .putExtra("intent_type", intentType)
-        )
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == LAUNCH_ADD_ACTIVITY && resultCode == RESULT_OK)
+            allNote()
     }
 }
 
