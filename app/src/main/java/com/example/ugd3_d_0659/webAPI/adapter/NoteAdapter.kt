@@ -40,9 +40,9 @@ class NoteAdapter(private  var noteList: List<Note>, context: Context) :
         return filteredNoteList.size
     }
 
-    fun setNoteList(mahasiswaList: Array<Note>){
-        this.noteList = mahasiswaList.toList()
-        filteredNoteList = mahasiswaList.toMutableList()
+    fun setNoteList(noteList: Array<Note>){
+        this.noteList = noteList.toList()
+        filteredNoteList = noteList.toMutableList()
     }
 
     override fun onBindViewHolder(holder : ViewHolder, position: Int) {
@@ -54,7 +54,7 @@ class NoteAdapter(private  var noteList: List<Note>, context: Context) :
         holder.btnDelete.setOnClickListener{
             val materialAlertDialogBuilder = MaterialAlertDialogBuilder(context)
             materialAlertDialogBuilder.setTitle("Konfimasi")
-                .setMessage("Apakah anda yakin ingin menghapus data mahasiswa ini?")
+                .setMessage("Apakah anda yakin ingin menghapus catatan ini?")
                 .setNegativeButton("Batal", null)
                 .setPositiveButton("Hapus") { _, _ ->
                     if (context is MenuNote) note.id?.let { it1 ->
@@ -66,7 +66,7 @@ class NoteAdapter(private  var noteList: List<Note>, context: Context) :
 
         holder.cvNote.setOnClickListener {
             val i = Intent(context, EditNoteActivity::class.java)
-            i.putExtra("id", note.id)
+            i.putExtra("idNote", note.id)
             if(context is MenuNote)
                 context.startActivityForResult(i, MenuNote.LAUNCH_ADD_ACTIVITY)
         }

@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
-import android.view.View
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -18,7 +17,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.ugd3_d_0659.databinding.ActivityMainBinding
 import com.example.ugd3_d_0659.webAPI.models.User
-import com.example.ugd3_d_0659.webAPI.AddEditActivity
+import com.example.ugd3_d_0659.webAPI.AddEditUserActivity
 import com.example.ugd3_d_0659.webAPI.api.UserApi
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
@@ -89,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         etBtnRegister!!.setOnClickListener {
-            val intent = Intent(this@MainActivity, AddEditActivity::class.java)
+            val intent = Intent(this@MainActivity, AddEditUserActivity::class.java)
             startActivity(intent)
         }
 

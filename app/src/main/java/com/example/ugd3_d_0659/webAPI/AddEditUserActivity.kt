@@ -15,13 +15,11 @@ import android.view.WindowManager
 import android.widget.*
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.fragment.app.Fragment
 import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.ugd3_d_0659.FragmentProfil
 import com.example.ugd3_d_0659.MainActivity
 import com.example.ugd3_d_0659.NotificationReceiver
 import com.example.ugd3_d_0659.R
@@ -35,7 +33,7 @@ import java.nio.charset.StandardCharsets
 import java.util.*
 import kotlin.collections.HashMap
 
-class AddEditActivity : AppCompatActivity() {
+class AddEditUserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddEditBinding
 
     private var etNama: TextInputEditText? = null
@@ -127,7 +125,7 @@ class AddEditActivity : AppCompatActivity() {
                     etTglLahir!!.setText(user.tglLahir)
                     etTelp!!.setText(user.telp)
 
-                    Toast.makeText(this@AddEditActivity,"Data berhasil diambil", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AddEditUserActivity,"Data berhasil diambil", Toast.LENGTH_SHORT).show()
                     setLoading(false)
                 },
                 Response.ErrorListener{ error ->
@@ -141,7 +139,7 @@ class AddEditActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                     } catch (e: Exception){
-                        Toast.makeText(this@AddEditActivity, e.message, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@AddEditUserActivity, e.message, Toast.LENGTH_SHORT).show()
                     }
                 }) {
             @Throws(AuthFailureError::class)
@@ -176,7 +174,7 @@ class AddEditActivity : AppCompatActivity() {
                 var user = gson.fromJson(jsonArray.toString(), User::class.java)
 
                 if(user != null)
-                    Toast.makeText(this@AddEditActivity, "Data berhasil ditambahkan", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AddEditUserActivity, "Data berhasil ditambahkan", Toast.LENGTH_SHORT).show()
 
 
                 val returnIntent = Intent()
@@ -195,7 +193,7 @@ class AddEditActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 } catch (e: Exception){
-                    Toast.makeText(this@AddEditActivity, e.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AddEditUserActivity, e.message, Toast.LENGTH_SHORT).show()
                 }
             }){
                 @Throws(AuthFailureError::class)
@@ -222,7 +220,7 @@ class AddEditActivity : AppCompatActivity() {
         mBundle.putString("username",user.username)
         mBundle.putString("password",user.password)
 
-        val moveMain = Intent(this@AddEditActivity, MainActivity::class.java)
+        val moveMain = Intent(this@AddEditUserActivity, MainActivity::class.java)
         moveMain.putExtra("login", mBundle)
         startActivity(moveMain)
         sendNotification()
@@ -251,7 +249,7 @@ class AddEditActivity : AppCompatActivity() {
 
                 println("masuk ke stringRequest")
                 if(user != null){
-                    Toast.makeText(this@AddEditActivity, "Data berhasil diubah", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AddEditUserActivity, "Data berhasil diubah", Toast.LENGTH_SHORT).show()
                     editor.putString("user", user.username)
                     editor.putString("password", user.password)
                     editor.putString("nama", user.nama)
@@ -276,7 +274,7 @@ class AddEditActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 } catch (e: Exception){
-                    Toast.makeText(this@AddEditActivity, e.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AddEditUserActivity, e.message, Toast.LENGTH_SHORT).show()
                 }
             }){
                 @Throws(AuthFailureError::class)
@@ -352,7 +350,7 @@ class AddEditActivity : AppCompatActivity() {
                     checkRegis = false
                 }else{
                     etUsername!!.error = null
-                    Toast.makeText(this@AddEditActivity, "Username diterima", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AddEditUserActivity, "Username diterima", Toast.LENGTH_SHORT).show()
                 }
 
                 if(user.email.isEmpty()){
@@ -423,9 +421,9 @@ class AddEditActivity : AppCompatActivity() {
                     val responseBody =
                         String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(this@AddEditActivity, errors.getString("message"), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AddEditUserActivity, errors.getString("message"), Toast.LENGTH_SHORT).show()
                 } catch (e: Exception){
-                    Toast.makeText(this@AddEditActivity, e.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AddEditUserActivity, e.message, Toast.LENGTH_SHORT).show()
                 }
             }) {
             @Throws(AuthFailureError::class)

@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.android.volley.AuthFailureError
@@ -20,7 +19,7 @@ import com.android.volley.toolbox.Volley
 import com.example.ugd3_d_0659.camera.CameraActivity
 import com.example.ugd3_d_0659.databinding.FragmentProfilBinding
 import com.example.ugd3_d_0659.webAPI.models.User
-import com.example.ugd3_d_0659.webAPI.AddEditActivity
+import com.example.ugd3_d_0659.webAPI.AddEditUserActivity
 import com.example.ugd3_d_0659.webAPI.api.UserApi
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_profil.*
@@ -55,7 +54,7 @@ class FragmentProfil : Fragment() {
         getUserById(idUser)
 
         btnEditDiProfil.setOnClickListener{
-            val moveEdit = Intent(activity, AddEditActivity::class.java)
+            val moveEdit = Intent(activity, AddEditUserActivity::class.java)
             moveEdit.putExtra("id", idUser)
             startActivity(moveEdit)
         }

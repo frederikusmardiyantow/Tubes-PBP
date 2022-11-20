@@ -6,15 +6,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.ImageButton
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ugd3_d_0659.databinding.ItemUserBinding
-import com.example.ugd3_d_0659.webAPI.AddEditActivity
+import com.example.ugd3_d_0659.webAPI.AddEditUserActivity
 import com.example.ugd3_d_0659.webAPI.ApiMainActivity
 import com.example.ugd3_d_0659.webAPI.models.User
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -68,7 +66,7 @@ class UserAdapter(private var userList: List<User>, context: Context): RecyclerV
 //        }
 
         holder.cvUser.setOnClickListener {
-            val i = Intent(context, AddEditActivity::class.java)
+            val i = Intent(context, AddEditUserActivity::class.java)
             i.putExtra("id", user.id)
             if(context is ApiMainActivity)
                 context.startActivityForResult(i, ApiMainActivity.LAUNCH_ADD_ACTIVITY)
