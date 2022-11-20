@@ -1,4 +1,4 @@
-package com.example.ugd3_d_0659.api
+package com.example.ugd3_d_0659.webAPI.api
 
 class NoteApi {
     companion object {

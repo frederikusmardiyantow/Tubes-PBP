@@ -1,6 +1,5 @@
 package com.example.ugd3_d_0659
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -18,9 +17,9 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.ugd3_d_0659.adapters.NoteAdapter
-import com.example.ugd3_d_0659.api.NoteApi
-import com.example.ugd3_d_0659.models.Note
+import com.example.ugd3_d_0659.webAPI.adapter.NoteAdapter
+import com.example.ugd3_d_0659.webAPI.api.NoteApi
+import com.example.ugd3_d_0659.webAPI.models.Note
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_menu_note.*
 import org.json.JSONObject

@@ -1,4 +1,4 @@
-package com.example.ugd3_d_0659.adapters
+package com.example.ugd3_d_0659.webAPI.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -14,12 +14,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ugd3_d_0659.EditNoteActivity
 import com.example.ugd3_d_0659.MenuNote
 import com.example.ugd3_d_0659.R
-import com.example.ugd3_d_0659.models.Note
+import com.example.ugd3_d_0659.webAPI.models.Note
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.*
 import kotlin.collections.ArrayList
 
-class NoteAdapter(private  var noteList: List<Note>,context: Context) :
+class NoteAdapter(private  var noteList: List<Note>, context: Context) :
     RecyclerView.Adapter<NoteAdapter.ViewHolder>(), Filterable {
     private  var filteredNoteList: MutableList<Note>
     private val context: Context
@@ -29,7 +29,7 @@ class NoteAdapter(private  var noteList: List<Note>,context: Context) :
         this.context = context
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, vieType: Int): ViewHolder{
+    override fun onCreateViewHolder(parent: ViewGroup, vieType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.item_note, parent, false)
 
@@ -45,7 +45,7 @@ class NoteAdapter(private  var noteList: List<Note>,context: Context) :
         filteredNoteList = mahasiswaList.toMutableList()
     }
 
-    override fun onBindViewHolder(holder :ViewHolder,position: Int) {
+    override fun onBindViewHolder(holder : ViewHolder, position: Int) {
         val note = filteredNoteList[position]
         holder.tvTitle.text = note.title
         holder.tvNote.text = note.note
