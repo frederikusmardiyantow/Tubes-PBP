@@ -31,10 +31,6 @@ class HomeActivity : AppCompatActivity() {
                     changeFragment(FragmentMataPelajaran())
                     true
                 }
-                R.id.menu_profil -> {
-                    changeFragment(FragmentProfil())
-                    true
-                }
                 R.id.menu_capaian -> {
                     changeFragment(FragmentCapaian())
                     true
@@ -44,7 +40,10 @@ class HomeActivity : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
-
+                R.id.menu_profil -> {
+                    changeFragment(FragmentProfil())
+                    true
+                }
                 else -> false
             }
         }

@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CCFFFFFF"
-    android:gravity="center"
-    android:orientation="vertical"
+    android:background= "#CCFFFFFF"
+    android:gravity= "center"
+    android:orientation= "vertical"
     android:translationZ="10dp">
 
     <ProgressBar
@@ -18,5 +18,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="Loading"/>
+        android:text="Lagi Loading.."/>
+
 </LinearLayout>

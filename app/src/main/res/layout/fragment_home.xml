@@ -22,7 +22,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Nama User disini"
+        android:text=""
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/hallo"
         app:layout_constraintTop_toBottomOf="@+id/hallo" />

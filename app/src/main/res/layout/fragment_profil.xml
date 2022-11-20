@@ -4,12 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/utama"
     tools:context=".FragmentProfil">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
 
         <ImageView
@@ -69,7 +68,7 @@
             android:layout_marginStart="27dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="18dp"
-            android:text="Nama disini"
+            android:text=""
             android:textSize="23dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/n" />
@@ -94,7 +93,7 @@
             android:layout_marginStart="27dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="18dp"
-            android:text="User disini"
+            android:text=""
             android:textSize="23dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/u" />
@@ -119,7 +118,7 @@
             android:layout_marginStart="27dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="18dp"
-            android:text="Email disini"
+            android:text=""
             android:textSize="23dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/e" />
@@ -145,7 +144,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="18dp"
             android:password="true"
-            android:text="Password disini"
+            android:text=""
             android:textSize="23dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/p" />
@@ -170,7 +169,7 @@
             android:layout_marginStart="27dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="18dp"
-            android:text="Tanggal Lahir disini"
+            android:text=""
             android:textSize="23dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/t" />
@@ -194,35 +193,32 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="27dp"
             android:layout_marginTop="4dp"
+            android:layout_marginBottom="30dp"
             android:layout_marginEnd="18dp"
-            android:text="Telepon disini"
+            android:text="ddd"
             android:textSize="23dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/telp" />
 
-        <TextView
-            android:id="@+id/temp"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="18dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
+            android:drawableLeft="@drawable/ic_baseline_logout_24"
+            android:text="Log out "
+            android:textColor="#000000"
             android:textSize="15dp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/telpDiProfil" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="27dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="18dp"
-            android:textSize="23dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/temp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/telpDiProfil"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </ScrollView>
 

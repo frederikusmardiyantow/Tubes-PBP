@@ -16,15 +16,13 @@
         android:icon="@drawable/ic_reward_24"
         android:title="Capaian"/>
     <item
-        android:id="@+id/menu_profil"
-        android:enabled="true"
-        android:icon="@drawable/ic_profil_24"
-        android:title="Profil"/>
-
-    <item
         android:id="@+id/menu_maps"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_location_on_24"
         android:title="Map"/>
-
+    <item
+        android:id="@+id/menu_profil"
+        android:enabled="true"
+        android:icon="@drawable/ic_profil_24"
+        android:title="Profil"/>
 </menu>

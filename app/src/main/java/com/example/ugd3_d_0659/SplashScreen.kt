@@ -6,14 +6,11 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import com.example.ugd3_d_0659.room.User
-import com.example.ugd3_d_0659.room.UserDB
 
 class SplashScreen : AppCompatActivity() {
-    private val myPref = "myPref"
+    private val myPref = "myPrefSplash"
     private val screen = "nameKey"
     var sharedPreferences: SharedPreferences? = null
-    val db by lazy { UserDB(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +34,6 @@ class SplashScreen : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }, 1000)
-            db.userDao().addUser(
-                User(0, "admin", "admin", "admin", "admin", "11/11/2000", "085701160012")
-            )
-            println("masuk sinii")
         }
 
     }

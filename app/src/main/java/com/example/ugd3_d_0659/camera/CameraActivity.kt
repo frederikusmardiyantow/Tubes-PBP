@@ -1,4 +1,4 @@
-package com.example.ugd3_d_0659
+package com.example.ugd3_d_0659.camera
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -9,6 +9,8 @@ import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
+import com.example.ugd3_d_0659.HomeActivity
+import com.example.ugd3_d_0659.R
 
 class CameraActivity : AppCompatActivity() {
     private var mCamera: Camera? = null

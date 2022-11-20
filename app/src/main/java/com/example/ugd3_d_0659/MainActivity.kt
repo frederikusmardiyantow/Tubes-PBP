@@ -7,36 +7,41 @@ import android.os.Bundle
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
-import android.graphics.drawable.Icon
-import android.os.Build
 import android.view.View
-import android.widget.Button
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat
+import com.android.volley.AuthFailureError
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.example.ugd3_d_0659.databinding.ActivityMainBinding
-import com.example.ugd3_d_0659.databinding.ActivityRegistrationBinding
-import com.example.ugd3_d_0659.room.User
-import com.example.ugd3_d_0659.room.UserDB
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputLayout
+import com.example.ugd3_d_0659.webAPI.models.User
+import com.example.ugd3_d_0659.webAPI.AddEditActivity
+import com.example.ugd3_d_0659.webAPI.api.UserApi
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
+import com.google.gson.Gson
+import org.json.JSONObject
+import java.nio.charset.StandardCharsets
 
 class MainActivity : AppCompatActivity() {
-    //private lateinit var inputUsername: TextInputLayout
-    //private lateinit var inputPassword: TextInputLayout
-    //private lateinit var mainLayout: ConstraintLayout
+    private var etUsername: TextInputEditText? = null
+    private var etPassword: TextInputEditText? = null
+    private var etBtnRegister: MaterialButton? = null
+    private var etBtnLogin: MaterialButton? = null
+
     var mBundle: Bundle? = null
-    var tempUsername: String = "admin"
-    var tempPassword: String = "admin"
+    var tempUsername: String = null.toString()
+    var tempPassword: String = null.toString()
     private val myPreference = "myPref"
     private val myLoginPreference = "myLogin"
-    private val id = "nameKey"
-    private val user = "userLogin"
-    private val pass = "passLogin"
     private lateinit var binding: ActivityMainBinding
     var sharedPreferences: SharedPreferences? = null
-    val db by lazy { UserDB(this) }
+    var sharedPreferencesLogin: SharedPreferences? = null
+    private var queue: RequestQueue? = null
+    private var loginCek = false
 
     private var notificationManager: NotificationManager? = null
     private val channelID = "Tubes.news"
@@ -46,6 +51,12 @@ class MainActivity : AppCompatActivity() {
         //setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        queue = Volley.newRequestQueue(this)
+        etUsername = binding.etLayoutUsername
+        etPassword = binding.etLayoutPassword
+        etBtnRegister = binding.btnRegistration
+        etBtnLogin = binding.btnLogin
 
         notificationManager =
             getSystemService(
@@ -57,8 +68,6 @@ class MainActivity : AppCompatActivity() {
             "Message", "Ini Pesan Mama dan Papa.."
         )
 
-        sharedPreferences = getSharedPreferences(myLoginPreference, Context.MODE_PRIVATE)
-
         getSupportActionBar()?.hide()
 
         //inputUsername = findViewById(R.id.inputLayoutUsername)
@@ -66,95 +75,49 @@ class MainActivity : AppCompatActivity() {
         //mainLayout = findViewById(R.id.mainLayout)
 
         if (sharedPreferences != null) {
-            val usernameLogin = sharedPreferences!!.getString(user, "")
-            val passwordLogin = sharedPreferences!!.getString(pass, "")
+            val usernameLogin = sharedPreferences!!.getString("user", "")
+            val passwordLogin = sharedPreferences!!.getString("password", "")
 
-            binding.inputLayoutUsername.getEditText()?.setText(usernameLogin)
-            binding.inputLayoutPassword.getEditText()?.setText(passwordLogin)
+            etUsername!!.setText(usernameLogin)
+            etPassword!!.setText(passwordLogin)
         }
 
         if (intent.getBundleExtra("login") != null) {
             getBundle()
-            binding.inputLayoutUsername.getEditText()?.setText(tempUsername)
-            binding.inputLayoutPassword.getEditText()?.setText(tempPassword)
+            etUsername!!.setText(tempUsername)
+            etPassword!!.setText(tempPassword)
         }
 
-        //val btnRegis: Button = findViewById(R.id.btnRegistration)
-        //val btnLogin: Button = findViewById(R.id.btnLogin)
-
-        binding.btnRegistration.setOnClickListener {
-            val intent = Intent(this@MainActivity, RegistrationActivity::class.java)
+        etBtnRegister!!.setOnClickListener {
+            val intent = Intent(this@MainActivity, AddEditActivity::class.java)
             startActivity(intent)
         }
 
-        binding.btnLogin.setOnClickListener(View.OnClickListener {
+        etBtnLogin!!.setOnClickListener {
             var checkLogin = false
-            var username: String = binding.inputLayoutUsername.getEditText()?.getText().toString()
-            var password: String = binding.inputLayoutPassword.getEditText()?.getText().toString()
-            sharedPreferences = getSharedPreferences(
-                myPreference,
-                Context.MODE_PRIVATE
-            )
-            val editor: SharedPreferences.Editor =
-                sharedPreferences!!.edit()
-            sharedPreferences = getSharedPreferences(
-                myLoginPreference,
-                Context.MODE_PRIVATE
-            )
-            val editorLogin: SharedPreferences.Editor =
-                sharedPreferences!!.edit()
+            var username: String = etUsername!!.text.toString()
+            var password: String = etPassword!!.text.toString()
 
-
-            if (db.userDao().getUserLogin(username, password) != null) {
-                tempUsername = db.userDao().getUserLogin(username, password)!!.username
-                tempPassword = db.userDao().getUserLogin(username, password)!!.password
-            }
 
             if (username.isEmpty()) {
-                binding.inputLayoutUsername.setError("Username must be filled with text!")
+                etUsername!!.error = "Username harus terisi!"
                 checkLogin = false
             } else {
-                binding.inputLayoutUsername.error = null
+                etUsername!!.error = null
             }
 
             if (password.isEmpty()) {
-                binding.inputLayoutPassword.setError("Password must be filled with text")
+                etPassword!!.error = "Password harus terisi"
                 checkLogin = false
             } else {
-                binding.inputLayoutPassword.error = null
+                etPassword!!.error = null
             }
 
-            if ((username == tempUsername && password == tempPassword)) {
-                editor.putInt(id, db.userDao().getUserLogin(username, password)!!.id)
-                editor.apply()
-                editorLogin.putString(
-                    user,
-                    db.userDao().getUserLogin(username, password)!!.username
-                )
-                editorLogin.putString(
-                    pass,
-                    db.userDao().getUserLogin(username, password)!!.password
-                )
-                editorLogin.apply()
-                checkLogin = true
-            } else {
-                if (username.isNotEmpty() && password.isNotEmpty() && db.userDao()
-                        .getUserLogin(username, password) == null
-                ) {
-                    Snackbar.make(
-                        binding.mainLayout,
-                        "Login Invalid! Check your input Username and Password",
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
-            }
 
-            if (!checkLogin) return@OnClickListener
-            val moveHome = Intent(this@MainActivity, HomeActivity::class.java)
-            sendNotification()
-            startActivity(moveHome)
-        })
+            cekLogin(username, password)
 
+
+        }
     }
 
     fun getBundle() {
@@ -227,4 +190,62 @@ class MainActivity : AppCompatActivity() {
             notify(SUMMARY_ID, summaryNotification)
         }
     }
+
+    private fun cekLogin(username:String, password:String){
+        sharedPreferencesLogin = getSharedPreferences(myLoginPreference, Context.MODE_PRIVATE)
+        val editorLogin: SharedPreferences.Editor = sharedPreferencesLogin!!.edit()
+        sharedPreferences = getSharedPreferences(myPreference, Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
+
+        val stringRequest : StringRequest = object:
+            StringRequest(Method.GET, UserApi.GET_ALL_URL, Response.Listener { response ->
+                val gson = Gson()
+
+                val jsonObject = JSONObject(response)
+                val jsonArray = jsonObject.getJSONArray("data")
+                var users : Array<User> = gson.fromJson(jsonArray.toString(), Array<User>::class.java)
+
+                for(user in users){
+                    println("masuk")
+                    if(user.username == username && user.password == password){
+                        editorLogin.putLong("idUser", user.id!!)
+                        editorLogin.commit()
+                        editor.putString("user", user.username)
+                        editor.putString("password", user.password)
+                        editor.putString("nama", user.nama)
+                        editor.commit()
+                        loginCek = true
+                    }
+                }
+
+                if(loginCek == true){
+                    Toast.makeText(this@MainActivity, "Selamat Datang..", Toast.LENGTH_SHORT).show()
+                    val moveHome = Intent(this@MainActivity, HomeActivity::class.java)
+                    sendNotification()
+                    startActivity(moveHome)
+                }else{
+                    Toast.makeText(this@MainActivity, "Data Tidak ditemukan", Toast.LENGTH_SHORT).show()
+                }
+
+            }, Response.ErrorListener { error ->
+                try {
+                    val responseBody =
+                        String(error.networkResponse.data, StandardCharsets.UTF_8)
+                    val errors = JSONObject(responseBody)
+                    Toast.makeText(this@MainActivity, errors.getString("message"), Toast.LENGTH_SHORT).show()
+                } catch (e: Exception){
+                    Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_SHORT).show()
+                }
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Accept"] = "application/json"
+                return headers
+            }
+
+        }
+        queue!!.add(stringRequest)
+    }
+
 }

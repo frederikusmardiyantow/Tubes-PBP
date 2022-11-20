@@ -1,4 +1,4 @@
-package com.example.ugd3_d_0659
+package com.example.ugd3_d_0659.camera
 
 import android.content.Context
 import android.hardware.Camera
