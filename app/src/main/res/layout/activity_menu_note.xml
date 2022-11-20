@@ -38,18 +38,27 @@
             android:paddingBottom="88dp"
             tools:listitem="@layout/item_note"/>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    <Button
-        android:id="@+id/button_create"
-        android:layout_width="0dp"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        android:textColor="@color/black"
-        android:text="Tulis Catatan"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal"
+        android:padding="6dp"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="10dp"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/button_create"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFF3CC"
+            android:textColor="@color/black"
+            android:text="Tulis Catatan"
+            />
+    </LinearLayout>
+
 
     <include
         android:id="@+id/layout_loading"

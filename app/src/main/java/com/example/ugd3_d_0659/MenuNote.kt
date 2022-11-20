@@ -71,7 +71,9 @@ class MenuNote : AppCompatActivity() {
         val stringRequest: StringRequest = object :
             StringRequest(Method.GET, NoteApi.GET_ALL_URL, Response.Listener { response ->
                 val gson = Gson()
-                var note : Array<Note> = gson.fromJson(response, Array<Note>::class.java)
+                val jsonObject = JSONObject(response)
+                val jsonArray = jsonObject.getJSONArray("data")
+                var note : Array<Note> = gson.fromJson(jsonArray.toString(), Array<Note>::class.java)
 
                 adapter!!.setNoteList(note)
                 adapter!!.filter.filter(svNote!!.query)
@@ -107,7 +109,9 @@ class MenuNote : AppCompatActivity() {
             StringRequest(Method.DELETE, NoteApi.DELETE_URL + id, Response.Listener { response ->
                 setLoading(false)
                 val gson = Gson()
-                var note = gson.fromJson(response, Note::class.java)
+                val jsonObject = JSONObject(response)
+                val jsonArray = jsonObject.getJSONObject("data")
+                var note = gson.fromJson(jsonArray.toString(), Note::class.java)
 
                 if (note != null)
                     Toast.makeText(this@MenuNote, "Data Berhasil Dihapus", Toast.LENGTH_SHORT).show()

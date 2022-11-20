@@ -106,8 +106,8 @@ class NoteAdapter(private  var noteList: List<Note>, context: Context) :
         var cvNote: CardView
 
         init {
-            tvTitle= itemView.findViewById(R.id.tv_title)
-            tvNote=itemView.findViewById(R.id.note)
+            tvTitle= itemView.findViewById(R.id.tv_title_note)
+            tvNote=itemView.findViewById(R.id.tv_note)
             btnDelete=itemView.findViewById(R.id.btn_delete)
             cvNote=itemView.findViewById(R.id.cv_note)
         }

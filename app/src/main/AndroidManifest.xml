@@ -12,7 +12,6 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/logoproject_hitam"
         android:label="Bisa Belajar"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@drawable/logoproject_hitam"
         android:supportsRtl="true"
         android:theme="@style/Theme.UGD3_D_0659"
@@ -40,12 +39,9 @@
             android:exported="false"
             android:parentActivityName=".HomeActivity" />
         <activity
-            android:name=".NoteAdapter"
-            android:exported="false"
-            tools:ignore="Instantiatable" />
-        <activity
             android:name=".EditNoteActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".HomeActivity"/>
         <activity
             android:name=".MenuNote"
             android:exported="false" />
@@ -61,9 +57,6 @@
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegistrationActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

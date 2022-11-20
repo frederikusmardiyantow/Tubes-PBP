@@ -170,7 +170,7 @@ class AddEditUserActivity : AppCompatActivity() {
             object: StringRequest(Method.POST, UserApi.ADD_URL, Response.Listener { response ->
                 val gson = Gson()
                 val jsonObject = JSONObject(response)
-                val jsonArray = jsonObject.getJSONObject("data")
+                val jsonArray = jsonObject.getJSONObject("user")
                 var user = gson.fromJson(jsonArray.toString(), User::class.java)
 
                 if(user != null)

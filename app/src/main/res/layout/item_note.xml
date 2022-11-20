@@ -9,7 +9,6 @@
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="5dp"
-    app:cardBackgroundColor="@color/utama2"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
@@ -24,7 +23,7 @@
             android:padding="12dp">
 
             <TextView
-                android:id="@+id/tv_title"
+                android:id="@+id/tv_title_note"
                 style="@style/TextAppearance.MaterialComponents.Subtitle2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

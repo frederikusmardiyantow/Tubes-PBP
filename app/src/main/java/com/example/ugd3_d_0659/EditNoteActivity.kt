@@ -41,14 +41,14 @@ class EditNoteActivity : AppCompatActivity() {
         createNotificationChannel()
 
         queue = Volley.newRequestQueue(this)
-        etTitle = findViewById(R.id.et_title)
+        etTitle = findViewById(R.id.et_title_note)
         etNote = findViewById(R.id.et_note)
         layoutLoading = findViewById(R.id.layout_loading)
 
         val btnCancel = findViewById<Button>(R.id.button_cancel)
         btnCancel.setOnClickListener{ finish() }
         val btnSave = findViewById<Button>(R.id.button_save)
-        val tvTitle = findViewById<TextView>(R.id.tv_title)
+        val tvTitle = findViewById<TextView>(R.id.tv_title_noteActivity)
         val id = intent.getLongExtra("idNote", -1)
         if (id== -1L) {
             tvTitle.setText("Tambah Note")
@@ -80,7 +80,9 @@ class EditNoteActivity : AppCompatActivity() {
         val stringRequest: StringRequest = object :
             StringRequest(Method.PUT, NoteApi.UPDATE_URL + id, Response.Listener { response ->
                 val gson = Gson()
-                var note = gson.fromJson(response, Note::class.java)
+                val jsonObject = JSONObject(response)
+                val jsonArray = jsonObject.getJSONObject("data")
+                var note = gson.fromJson(jsonArray.toString(), Note::class.java)
 
                 if (note != null)
                     Toast.makeText(this@EditNoteActivity, "Data Berhasil Diupdate", Toast.LENGTH_SHORT).show()
@@ -133,7 +135,9 @@ class EditNoteActivity : AppCompatActivity() {
         val stringRequest: StringRequest = object :
             StringRequest(Method.POST, NoteApi.ADD_URL, Response.Listener { response ->
                 val gson = Gson()
-                var note = gson.fromJson(response, Note::class.java)
+                val jsonObject = JSONObject(response)
+                val jsonArray = jsonObject.getJSONObject("data")
+                var note = gson.fromJson(jsonArray.toString(), Note::class.java)
 
                 if (note != null)
                     Toast.makeText(this@EditNoteActivity, "Data Berhasil Ditambahkan", Toast.LENGTH_SHORT).show()
@@ -180,7 +184,9 @@ class EditNoteActivity : AppCompatActivity() {
         val stringRequest: StringRequest = object :
             StringRequest(Method.GET, NoteApi.GET_BY_ID_URL + id, Response.Listener { response ->
                 val gson = Gson()
-                val note = gson.fromJson(response, Note::class.java)
+                val jsonObject = JSONObject(response)
+                val jsonArray = jsonObject.getJSONObject("data")
+                val note = gson.fromJson(jsonArray.toString(), Note::class.java)
 
                 etTitle!!.setText(note.title)
                 etNote!!.setText(note.note)
