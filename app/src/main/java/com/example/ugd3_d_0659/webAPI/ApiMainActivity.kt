@@ -25,6 +25,7 @@ import com.example.ugd3_d_0659.webAPI.api.UserApi
 import com.example.ugd3_d_0659.webAPI.models.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
+import com.shashank.sony.fancytoastlib.FancyToast
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 
@@ -92,9 +93,11 @@ class ApiMainActivity : AppCompatActivity() {
                 srUser!!.isRefreshing = false
 
                 if(!user.isEmpty())
-                    Toast.makeText(this@ApiMainActivity, "Data berhasil diambil", Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@ApiMainActivity,"Data berhasil diambil",FancyToast.LENGTH_LONG,FancyToast.INFO,false).show();
+//                    Toast.makeText(this@ApiMainActivity, "Data berhasil diambil", Toast.LENGTH_SHORT).show()
                 else
-                    Toast.makeText(this@ApiMainActivity, "Data Kosong!", Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@ApiMainActivity,"Data Kosong!",FancyToast.LENGTH_LONG,FancyToast.WARNING,false).show();
+//                    Toast.makeText(this@ApiMainActivity, "Data Kosong!", Toast.LENGTH_SHORT).show()
 
             }, Response.ErrorListener { error ->
                 srUser!!.isRefreshing = false
@@ -102,9 +105,11 @@ class ApiMainActivity : AppCompatActivity() {
                     val responseBody =
                         String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(this@ApiMainActivity, errors.getString("message"), Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@ApiMainActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                    Toast.makeText(this@ApiMainActivity, errors.getString("message"), Toast.LENGTH_SHORT).show()
                 } catch (e: Exception){
-                    Toast.makeText(this@ApiMainActivity, e.message, Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@ApiMainActivity,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                    Toast.makeText(this@ApiMainActivity, e.message, Toast.LENGTH_SHORT).show()
                 }
             }) {
             @Throws(AuthFailureError::class)

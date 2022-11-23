@@ -22,6 +22,7 @@ import com.android.volley.toolbox.Volley
 import com.example.ugd3_d_0659.webAPI.api.NoteApi
 import com.example.ugd3_d_0659.webAPI.models.Note
 import com.google.gson.Gson
+import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_edit_note.*
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
@@ -85,7 +86,8 @@ class EditNoteActivity : AppCompatActivity() {
                 var note = gson.fromJson(jsonArray.toString(), Note::class.java)
 
                 if (note != null)
-                    Toast.makeText(this@EditNoteActivity, "Data Berhasil Diupdate", Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@EditNoteActivity,"Data Berhasil Diupdate",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,true).show();
+//                    Toast.makeText(this@EditNoteActivity, "Data Berhasil Diupdate", Toast.LENGTH_SHORT).show()
 
                 val returnIntent = Intent()
                 setResult(RESULT_OK, returnIntent)
@@ -97,10 +99,12 @@ class EditNoteActivity : AppCompatActivity() {
                 try {
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(this@EditNoteActivity, errors.getString("message"), Toast.LENGTH_SHORT
-                    ).show()
+                    FancyToast.makeText(this@EditNoteActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                    Toast.makeText(this@EditNoteActivity, errors.getString("message"), Toast.LENGTH_SHORT
+//                    ).show()
                 }catch (e: Exception){
-                    Toast.makeText(this@EditNoteActivity, e.message, Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@EditNoteActivity,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                    Toast.makeText(this@EditNoteActivity, e.message, Toast.LENGTH_SHORT).show()
                 }
             }) {
             @Throws(AuthFailureError::class)
@@ -140,7 +144,8 @@ class EditNoteActivity : AppCompatActivity() {
                 var note = gson.fromJson(jsonArray.toString(), Note::class.java)
 
                 if (note != null)
-                    Toast.makeText(this@EditNoteActivity, "Data Berhasil Ditambahkan", Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@EditNoteActivity,"Data Berhasil Ditambahkan",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,true).show();
+//                    Toast.makeText(this@EditNoteActivity, "Data Berhasil Ditambahkan", Toast.LENGTH_SHORT).show()
 
                 val returnIntent = Intent()
                 setResult(RESULT_OK, returnIntent)
@@ -152,10 +157,12 @@ class EditNoteActivity : AppCompatActivity() {
                 try {
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(this@EditNoteActivity, errors.getString("message"), Toast.LENGTH_SHORT
-                    ).show()
+                    FancyToast.makeText(this@EditNoteActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                    Toast.makeText(this@EditNoteActivity, errors.getString("message"), Toast.LENGTH_SHORT
+//                    ).show()
                 }catch (e: Exception){
-                    Toast.makeText(this@EditNoteActivity, e.message, Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@EditNoteActivity,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                    Toast.makeText(this@EditNoteActivity, e.message, Toast.LENGTH_SHORT).show()
                 }
             }) {
             @Throws(AuthFailureError::class)
@@ -191,17 +198,20 @@ class EditNoteActivity : AppCompatActivity() {
                 etTitle!!.setText(note.title)
                 etNote!!.setText(note.note)
 
-                Toast.makeText(this@EditNoteActivity, "Data Berhasil Diambil", Toast.LENGTH_SHORT).show()
+                FancyToast.makeText(this@EditNoteActivity,"Data Berhasil Diambil",FancyToast.LENGTH_LONG,FancyToast.DEFAULT,true).show();
+//                Toast.makeText(this@EditNoteActivity, "Data Berhasil Diambil", Toast.LENGTH_SHORT).show()
                 setLoading(false)
             }, Response.ErrorListener { error ->
                 setLoading(false)
                 try {
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(this@EditNoteActivity, errors.getString("message"), Toast.LENGTH_SHORT
-                    ).show()
+                    FancyToast.makeText(this@EditNoteActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                    Toast.makeText(this@EditNoteActivity, errors.getString("message"), Toast.LENGTH_SHORT
+//                    ).show()
                 }catch (e: Exception){
-                    Toast.makeText(this@EditNoteActivity, e.message, Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@EditNoteActivity,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                    Toast.makeText(this@EditNoteActivity, e.message, Toast.LENGTH_SHORT).show()
                 }
             }) {
             @Throws(AuthFailureError::class)

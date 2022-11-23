@@ -22,6 +22,7 @@ import com.example.ugd3_d_0659.webAPI.api.UserApi
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
+import com.shashank.sony.fancytoastlib.FancyToast
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 
@@ -218,12 +219,14 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 if(loginCek == true){
-                    Toast.makeText(this@MainActivity, "Selamat Datang..", Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@MainActivity,"Login Berhasil\nSelamat Datang..",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,true).show();
+//                    Toast.makeText(this@MainActivity, "Selamat Datang..", Toast.LENGTH_SHORT).show()
                     val moveHome = Intent(this@MainActivity, HomeActivity::class.java)
                     sendNotification()
                     startActivity(moveHome)
                 }else{
-                    Toast.makeText(this@MainActivity, "Data Tidak ditemukan", Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@MainActivity,"Data Tidak ditemukan",FancyToast.LENGTH_LONG,FancyToast.WARNING,true).show();
+//                    Toast.makeText(this@MainActivity, "Data Tidak ditemukan", Toast.LENGTH_SHORT).show()
                 }
 
             }, Response.ErrorListener { error ->
@@ -231,9 +234,11 @@ class MainActivity : AppCompatActivity() {
                     val responseBody =
                         String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(this@MainActivity, errors.getString("message"), Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@MainActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                    Toast.makeText(this@MainActivity, errors.getString("message"), Toast.LENGTH_SHORT).show()
                 } catch (e: Exception){
-                    Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@MainActivity,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                    Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_SHORT).show()
                 }
             }) {
             @Throws(AuthFailureError::class)

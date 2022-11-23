@@ -28,6 +28,7 @@ import com.example.ugd3_d_0659.webAPI.api.UserApi
 import com.example.ugd3_d_0659.webAPI.models.User
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
+import com.shashank.sony.fancytoastlib.FancyToast
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 import java.util.*
@@ -125,7 +126,8 @@ class AddEditUserActivity : AppCompatActivity() {
                     etTglLahir!!.setText(user.tglLahir)
                     etTelp!!.setText(user.telp)
 
-                    Toast.makeText(this@AddEditUserActivity,"Data berhasil diambil", Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@AddEditUserActivity,"Data berhasil diambil",FancyToast.LENGTH_LONG,FancyToast.INFO,false).show();
+//                    Toast.makeText(this@AddEditUserActivity,"Data berhasil diambil", Toast.LENGTH_SHORT).show()
                     setLoading(false)
                 },
                 Response.ErrorListener{ error ->
@@ -133,13 +135,15 @@ class AddEditUserActivity : AppCompatActivity() {
                     try{
                         val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                         val errors = JSONObject(responseBody)
-                        Toast.makeText(
-                            this,
-                            errors.getString("message"),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        FancyToast.makeText(this@AddEditUserActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                        Toast.makeText(
+//                            this,
+//                            errors.getString("message"),
+//                            Toast.LENGTH_SHORT
+//                        ).show()
                     } catch (e: Exception){
-                        Toast.makeText(this@AddEditUserActivity, e.message, Toast.LENGTH_SHORT).show()
+                        FancyToast.makeText(this@AddEditUserActivity,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                        Toast.makeText(this@AddEditUserActivity, e.message, Toast.LENGTH_SHORT).show()
                     }
                 }) {
             @Throws(AuthFailureError::class)
@@ -174,7 +178,8 @@ class AddEditUserActivity : AppCompatActivity() {
                 var user = gson.fromJson(jsonArray.toString(), User::class.java)
 
                 if(user != null)
-                    Toast.makeText(this@AddEditUserActivity, "Data berhasil ditambahkan", Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@AddEditUserActivity,"Registrasi Sukses",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,false).show();
+//                    Toast.makeText(this@AddEditUserActivity, "Data berhasil ditambahkan", Toast.LENGTH_SHORT).show()
 
 
                 val returnIntent = Intent()
@@ -187,13 +192,15 @@ class AddEditUserActivity : AppCompatActivity() {
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(
-                        this,
-                        errors.getString("message"),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    FancyToast.makeText(this@AddEditUserActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                    Toast.makeText(
+//                        this,
+//                        errors.getString("message"),
+//                        Toast.LENGTH_SHORT
+//                    ).show()
                 } catch (e: Exception){
-                    Toast.makeText(this@AddEditUserActivity, e.message, Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@AddEditUserActivity,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                    Toast.makeText(this@AddEditUserActivity, e.message, Toast.LENGTH_SHORT).show()
                 }
             }){
                 @Throws(AuthFailureError::class)
@@ -249,7 +256,8 @@ class AddEditUserActivity : AppCompatActivity() {
 
                 println("masuk ke stringRequest")
                 if(user != null){
-                    Toast.makeText(this@AddEditUserActivity, "Data berhasil diubah", Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@AddEditUserActivity,"Edit Profile Sukses",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,false).show();
+//                    Toast.makeText(this@AddEditUserActivity, "Data berhasil diubah", Toast.LENGTH_SHORT).show()
                     editor.putString("user", user.username)
                     editor.putString("password", user.password)
                     editor.putString("nama", user.nama)
@@ -268,13 +276,15 @@ class AddEditUserActivity : AppCompatActivity() {
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(
-                        this,
-                        errors.getString("message"),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    FancyToast.makeText(this@AddEditUserActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                    Toast.makeText(
+//                        this,
+//                        errors.getString("message"),
+//                        Toast.LENGTH_SHORT
+//                    ).show()
                 } catch (e: Exception){
-                    Toast.makeText(this@AddEditUserActivity, e.message, Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@AddEditUserActivity,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                    Toast.makeText(this@AddEditUserActivity, e.message, Toast.LENGTH_SHORT).show()
                 }
             }){
                 @Throws(AuthFailureError::class)
@@ -350,7 +360,8 @@ class AddEditUserActivity : AppCompatActivity() {
                     checkRegis = false
                 }else{
                     etUsername!!.error = null
-                    Toast.makeText(this@AddEditUserActivity, "Username diterima", Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@AddEditUserActivity,"Username diterima",FancyToast.LENGTH_LONG,FancyToast.DEFAULT,true).show();
+//                    Toast.makeText(this@AddEditUserActivity, "Username diterima", Toast.LENGTH_SHORT).show()
                 }
 
                 if(user.email.isEmpty()){
@@ -421,9 +432,11 @@ class AddEditUserActivity : AppCompatActivity() {
                     val responseBody =
                         String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(this@AddEditUserActivity, errors.getString("message"), Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@AddEditUserActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                    Toast.makeText(this@AddEditUserActivity, errors.getString("message"), Toast.LENGTH_SHORT).show()
                 } catch (e: Exception){
-                    Toast.makeText(this@AddEditUserActivity, e.message, Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@AddEditUserActivity,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                    Toast.makeText(this@AddEditUserActivity, e.message, Toast.LENGTH_SHORT).show()
                 }
             }) {
             @Throws(AuthFailureError::class)

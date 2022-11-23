@@ -21,6 +21,7 @@ import com.example.ugd3_d_0659.webAPI.adapter.NoteAdapter
 import com.example.ugd3_d_0659.webAPI.api.NoteApi
 import com.example.ugd3_d_0659.webAPI.models.Note
 import com.google.gson.Gson
+import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_menu_note.*
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
@@ -79,18 +80,22 @@ class MenuNote : AppCompatActivity() {
                 adapter!!.filter.filter(svNote!!.query)
                 srNote!!.isRefreshing = false
                 if (!note.isEmpty())
-                    Toast.makeText(this@MenuNote, "Data Berhasil Diambil", Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@MenuNote,"Data Berhasil Diambil",FancyToast.LENGTH_LONG,FancyToast.DEFAULT,false).show();
+//                    Toast.makeText(this@MenuNote, "Data Berhasil Diambil", Toast.LENGTH_SHORT).show()
                 else
-                    Toast.makeText(this@MenuNote, "Data Kosong", Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@MenuNote,"Data Kosong",FancyToast.LENGTH_LONG,FancyToast.WARNING,false).show();
+//                    Toast.makeText(this@MenuNote, "Data Kosong", Toast.LENGTH_SHORT).show()
             }, Response.ErrorListener { error ->
                 srNote!!.isRefreshing = false
                 try {
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(this@MenuNote, errors.getString("message"), Toast.LENGTH_SHORT
-                    ).show()
+                    FancyToast.makeText(this@MenuNote,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                    Toast.makeText(this@MenuNote, errors.getString("message"), Toast.LENGTH_SHORT
+//                    ).show()
                 }catch (e: Exception){
-                    Toast.makeText(this@MenuNote, e.message, Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@MenuNote,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                    Toast.makeText(this@MenuNote, e.message, Toast.LENGTH_SHORT).show()
                 }
             }) {
             @Throws(AuthFailureError::class)
@@ -114,7 +119,8 @@ class MenuNote : AppCompatActivity() {
                 var note = gson.fromJson(jsonArray.toString(), Note::class.java)
 
                 if (note != null)
-                    Toast.makeText(this@MenuNote, "Data Berhasil Dihapus", Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@MenuNote,"Data Berhasil Dihapus",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,true).show();
+//                    Toast.makeText(this@MenuNote, "Data Berhasil Dihapus", Toast.LENGTH_SHORT).show()
 
                 allNote()
             }, Response.ErrorListener { error ->
@@ -122,10 +128,12 @@ class MenuNote : AppCompatActivity() {
                 try {
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(this@MenuNote, errors.getString("message"), Toast.LENGTH_SHORT
-                    ).show()
+                    FancyToast.makeText(this@MenuNote,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                    Toast.makeText(this@MenuNote, errors.getString("message"), Toast.LENGTH_SHORT
+//                    ).show()
                 }catch (e: Exception){
-                    Toast.makeText(this@MenuNote, e.message, Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@MenuNote,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                    Toast.makeText(this@MenuNote, e.message, Toast.LENGTH_SHORT).show()
                 }
             }) {
             @Throws(AuthFailureError::class)

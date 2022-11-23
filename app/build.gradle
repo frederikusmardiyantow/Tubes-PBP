@@ -5,6 +5,15 @@ plugins {
 }
 apply plugin: 'kotlin-kapt'
 
+//allprojects {
+//    plugins.withId("com.vanniktech.maven.publish") {
+//        mavenPublish {
+//            sonatypeHost = "S01"
+//        }
+//    }
+//}
+//apply plugin: 'com.vanniktech.maven.publish'
+
 android {
     compileSdk 32
 
@@ -72,4 +81,7 @@ dependencies {
 
     // pager indicator for RecyclerViews & ViewPagers.
     implementation 'com.github.wching:Android-Indefinite-Pager-Indicator:1.5'
+
+    // fancy toast
+    implementation 'io.github.shashank02051997:FancyToast:2.0.2'
 }

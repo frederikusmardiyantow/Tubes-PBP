@@ -22,6 +22,7 @@ import com.example.ugd3_d_0659.webAPI.models.User
 import com.example.ugd3_d_0659.webAPI.AddEditUserActivity
 import com.example.ugd3_d_0659.webAPI.api.UserApi
 import com.google.gson.Gson
+import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.fragment_profil.*
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
@@ -55,7 +56,7 @@ class FragmentProfil : Fragment() {
 
         queue = Volley.newRequestQueue(requireActivity())
         idUser = sharedPreferencesLogin!!.getLong("idUser",0)
-        println("idUsernya ni: "+idUser)
+
         getUserById(idUser)
 
         btnEditDiProfil.setOnClickListener{
@@ -100,19 +101,22 @@ class FragmentProfil : Fragment() {
                     binding?.tanggalDiProfil?.setText(User.tglLahir)
                     binding?.telpDiProfil?.setText(User.telp)
 
-                    Toast.makeText(requireActivity(),"Data berhasil diambil", Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(requireActivity(),"Data berhasil diambil",FancyToast.LENGTH_LONG,FancyToast.INFO,false).show();
+//                    Toast.makeText(requireActivity(),"Data berhasil diambil", Toast.LENGTH_SHORT).show()
                 },
                 Response.ErrorListener{ error ->
                     try{
                         val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                         val errors = JSONObject(responseBody)
-                        Toast.makeText(
-                            this.requireActivity(),
-                            errors.getString("message"),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        FancyToast.makeText(this.requireActivity(),errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                        Toast.makeText(
+//                            this.requireActivity(),
+//                            errors.getString("message"),
+//                            Toast.LENGTH_SHORT
+//                        ).show()
                     } catch (e: Exception){
-                        Toast.makeText(requireActivity(), e.message, Toast.LENGTH_SHORT).show()
+                        FancyToast.makeText(requireActivity(),e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                        Toast.makeText(requireActivity(), e.message, Toast.LENGTH_SHORT).show()
                     }
                 }) {
             @Throws(AuthFailureError::class)
