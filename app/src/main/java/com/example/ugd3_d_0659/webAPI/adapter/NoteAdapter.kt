@@ -138,8 +138,8 @@ class NoteAdapter(private  var noteList: List<Note>, context: Context) :
         table.addCell(Cell().add(Paragraph(LocalTime.now().format(timeFormatter))))
         val barcodeQRCode = BarcodeQRCode(
             """
-                $nama
-                $umur
+                $title
+                $note
                 ${LocalDate.now().format(dateTimeFormatter)}
                 ${LocalTime.now().format(timeFormatter)}
             """.trimIndent())
