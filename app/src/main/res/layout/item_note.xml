@@ -49,7 +49,13 @@
                 android:layout_weight="1"
                 android:gravity="bottom"
                 android:orientation="horizontal">
-
+                <ImageButton
+                    android:id="@+id/btn_print"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_baseline_picture_as_pdf_24"
+                    app:tint="#0000FF" />
                 <ImageButton
                     android:id="@+id/btn_delete"
                     android:layout_width="wrap_content"
