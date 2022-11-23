@@ -44,6 +44,11 @@ class FragmentProfil : Fragment() {
         //inflater.inflate(R.layout.fragment_profil, container, false)
     }
 
+    override fun onStart() {
+        super.onStart()
+        getUserById(idUser)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedPreferencesLogin = activity?.getSharedPreferences(myLoginPreference, Context.MODE_PRIVATE)
