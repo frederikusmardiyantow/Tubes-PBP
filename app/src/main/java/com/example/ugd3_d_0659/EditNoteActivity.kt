@@ -19,6 +19,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.ugd3_d_0659.webAPI.AddEditUserActivity
 import com.example.ugd3_d_0659.webAPI.api.NoteApi
 import com.example.ugd3_d_0659.webAPI.models.Note
 import com.google.gson.Gson
@@ -49,6 +50,11 @@ class EditNoteActivity : AppCompatActivity() {
         val btnCancel = findViewById<Button>(R.id.button_cancel)
         btnCancel.setOnClickListener{ finish() }
         val btnSave = findViewById<Button>(R.id.button_save)
+        val btnRecog = findViewById<Button>(R.id.button_recog)
+        btnRecog.setOnClickListener{
+            val intent = Intent(this@EditNoteActivity, TextRecognizerActivity::class.java)
+            startActivity(intent)
+        }
         val tvTitle = findViewById<TextView>(R.id.tv_title_noteActivity)
         val id = intent.getLongExtra("idNote", -1)
         if (id== -1L) {

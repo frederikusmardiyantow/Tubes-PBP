@@ -25,18 +25,7 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
-import com.itextpdf.barcodes.BarcodeQRCode
-import com.itextpdf.kernel.colors.ColorConstants
-import com.itextpdf.kernel.geom.PageSize
-import com.itextpdf.kernel.pdf.PdfDocument
-import com.itextpdf.kernel.pdf.PdfWriter
-import com.itextpdf.layout.Document
-import com.itextpdf.layout.element.Cell
-import com.itextpdf.layout.element.Image
-import com.itextpdf.layout.element.Paragraph
-import com.itextpdf.layout.element.Table
-import com.itextpdf.layout.property.HorizontalAlignment
-import com.itextpdf.layout.property.TextAlignment
+
 
 class NoteAdapter(private  var noteList: List<Note>, context: Context) :
     RecyclerView.Adapter<NoteAdapter.ViewHolder>(), Filterable {
@@ -89,7 +78,7 @@ class NoteAdapter(private  var noteList: List<Note>, context: Context) :
             if(context is MenuNote)
                 context.startActivityForResult(i, MenuNote.LAUNCH_ADD_ACTIVITY)
         }
-        holder.btnPrint.setOnClickListener {
+        /*holder.btnPrint.setOnClickListener {
             val title= holder.tvTitle.text.toString()
             val note = holder.tvNote.text.toString()
             try {
@@ -99,14 +88,14 @@ class NoteAdapter(private  var noteList: List<Note>, context: Context) :
             }catch (e: FileNotFoundException){
                 e.printStackTrace()
             }
-        }
+        }*/
     }
-    @SuppressLint("ObsoleteSdkInt")
+    /*@SuppressLint("ObsoleteSdkInt")
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Throws(
         FileNotFoundException::class
-    )
-    private fun createPdf(title: String, note: String) {
+    )*/
+    /*private fun createPdf(title: String, note: String) {
         val pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString()
         val file = File(pdfPath, "pdf_note.pdf")
         FileOutputStream(file)
@@ -153,7 +142,7 @@ class NoteAdapter(private  var noteList: List<Note>, context: Context) :
 
         document.close()
         Toast.makeText(this, "Pdf Created", Toast.LENGTH_LONG).show()
-    }
+    }*/
 
     override fun getFilter(): Filter {
         return object : Filter() {
