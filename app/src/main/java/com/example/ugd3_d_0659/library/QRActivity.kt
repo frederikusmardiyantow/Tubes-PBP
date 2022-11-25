@@ -22,6 +22,7 @@ import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
+import com.shashank.sony.fancytoastlib.FancyToast
 
 class QRActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -30,12 +31,13 @@ class QRActivity : AppCompatActivity(), View.OnClickListener {
     companion object{
         private const val CAMERA_REQUEST_CODE = 100
         private const val STORAGE_REQUEST_CODE = 101
+        //hanya 105, 110 angka lainnya
 
         private const val TAG = "MAIN_TAG"
     }
 
-    private lateinit var cameraPermissions: Array<String>
-    private lateinit var storagePermissions: Array<String>
+    private lateinit var cameraPermission: Array<String>
+    private lateinit var storagePermission: Array<String>
 
     private var imageUri: Uri? = null
 
@@ -45,162 +47,73 @@ class QRActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityQractivityBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_qractivity)
+        setContentView(binding.root)
 
         binding.cameraBtn.setOnClickListener(this)
         binding.galleryBtn.setOnClickListener(this)
         binding.scanBtn.setOnClickListener(this)
 
-        cameraPermissions = arrayOf(android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        storagePermissions = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        cameraPermission = arrayOf(android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        storagePermission = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
         barcodeScannerOption = BarcodeScannerOptions.Builder()
-            .setBarcodeFormats(Barcode.FORMAT_ALL_FORMATS).build()
+            .setBarcodeFormats(
+                (Barcode.FORMAT_ALL_FORMATS)
+            )
+            .build()
         barcodeScanner = BarcodeScanning.getClient(barcodeScannerOption!!)
     }
 
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.cameraBtn -> {
-                if (checkCameraPermissions()){
+                if(checkCameraPermissions()){
                     pickImageCamera()
-                }
-                else{
+                } else {
                     requestCameraPermission()
                 }
+
             }
             R.id.galleryBtn -> {
-                if (checkStoragePermision()) {
+                if(checkStoragePermissions()){
                     pickImageGallery()
-                }else {
+                } else {
                     requestStoragePermission()
                 }
+
             }
             R.id.scanBtn -> {
-                if (imageUri == null){
-                    showToast("Scan Barcode")
+                if(imageUri == null){
+                    showToast("Pick Image First")
+
                 } else {
                     detectResultFromImage()
                 }
-            }
-        }
-    }
-
-    private fun detectResultFromImage() {
-        try {
-            val inputImage = InputImage.fromFilePath(this, imageUri!!)
-
-            val barcodeResult = barcodeScanner?.process(inputImage)
-                ?.addOnSuccessListener { barcodes ->
-                    extractbarcodeQrCodeInfo(barcodes)
-                }
-                ?.addOnFailureListener{ e ->
-                    Log.d(TAG,"detectResultFromImage: ", e)
-                    showToast("failed Scanning due to ${e.message}")
-                }
-        }catch (e: Exception){
-            Log.d(TAG,"detectResultFromImage: ", e)
-            showToast("Gagal untuk ${e.message}")
-        }
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun extractbarcodeQrCodeInfo(barcodes: List<Barcode>) {
-        for (barcode in barcodes) {
-            val bound = barcode.boundingBox
-            val corners = barcode.cornerPoints
-
-            val rawValue = barcode.rawValue
-            Log.d(TAG,"extractbarcodeQrCodeInfo: rawValue: $rawValue")
-
-
-            val valueType = barcode.valueType
-            when(valueType) {
-                Barcode.TYPE_URL -> {
-                    val typeUrl = barcode.url
-                    val title = "${typeUrl?.title}"
-                    val url = "${typeUrl?.url}"
-
-                    Log.d(TAG,"extractbarcodeQrCodeInfo: TYPE_URL")
-                    Log.d(TAG,"extractbarcodeQrCodeInfo: title: $title")
-                    Log.d(TAG,"extractbarcodeQrCodeInfo: url: $url")
-
-                    binding.resultView.text =
-                        "TYPE_URL \ntitle: $title \nurl: $url \n\nrawValue : $rawValue"
-
-                }
-                Barcode.TYPE_CONTACT_INFO -> {
-                    val typeContact = barcode.contactInfo
-                    val title = "${typeContact?.title}"
-                    val organisasi = "${typeContact?.organization}"
-                    val name = "${typeContact?.name}"
-                    val phone = "${typeContact?.phones}"
-
-                    Log.d(TAG,"extractbarcodeQrCodeInfo: TYPE_CONTACT_INFO")
-                    Log.d(TAG,"extractbarcodeQrCodeInfo: Title: $title")
-                    Log.d(TAG,"extractbarcodeQrCodeInfo: Organization: $organisasi")
-                    Log.d(TAG,"extractbarcodeQrCodeInfo: nama: $name")
-                    Log.d(TAG,"extractbarcodeQrCodeInfo: Phone: $phone")
-
-                    binding.resultView.text =
-                        "TYPE_CONTACT_INFO " +
-                                "\ntitle: $title " +
-                                "\nnama: $name " +
-                                "\norganization: $organisasi " +
-                                "\nPhone : $phone"
-                    "\n\nrawValue : $rawValue"
-
-                }
-                else -> {
-                    binding.resultView.text =
-                        "rawValue: $rawValue"
-                }
 
 
             }
-
-
         }
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(this,message, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun requestStoragePermission() {
-        ActivityCompat.requestPermissions(this,storagePermissions, STORAGE_REQUEST_CODE)
     }
 
     private fun pickImageGallery() {
         val intent = Intent(Intent.ACTION_PICK)
-
         intent.type = "image/*"
+
         galleryActivityResultLauncher.launch(intent)
     }
 
-    private val galleryActivityResultLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ){result ->
-        if (result.resultCode == Activity.RESULT_OK){
+    private val galleryActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result ->
+        if(result.resultCode == Activity.RESULT_OK){
             val data = result.data
+            imageUri = data?.data
 
-            imageUri = data!!.data
-            Log.d(TAG,"galleryActivityResultLauncher: imageUri: $imageUri")
+            Log.d(TAG, "galleryActivityResultLauncher: imageuri: $imageUri")
 
             binding.imageTv.setImageURI(imageUri)
-
-        }else {
-            showToast("Tidak jadi.....")
+        }else{
+            showToast("Dibatalkan ............")
         }
-    }
 
-    private fun checkStoragePermision(): Boolean {
-        val result = (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED))
-        return result
-    }
-
-    private fun requestCameraPermission() {
-        ActivityCompat.requestPermissions(this, cameraPermissions, CAMERA_REQUEST_CODE)
     }
 
     private fun pickImageCamera() {
@@ -216,24 +129,32 @@ class QRActivity : AppCompatActivity(), View.OnClickListener {
         cameraActivityResultLauncher.launch(intent)
     }
 
-    private val cameraActivityResultLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ){result ->
-        if (result.resultCode == Activity.RESULT_OK){
+    private val cameraActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+        if(result.resultCode == Activity.RESULT_OK){
             val data = result.data
-            Log.d(TAG, "cameraActivityResultLauncher: imageUri: $imageUri")
+            Log.d(TAG, "cameraActivityResultLauncher: imageuri: $imageUri")
 
             binding.imageTv.setImageURI(imageUri)
         }
     }
 
     private fun checkCameraPermissions(): Boolean {
-        val resultcamera = (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_GRANTED)
-        val resultstorage = (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED)
-
+        val resultcamera = checkSelfPermission(android.Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED)
+        val resultstorage = checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED)
         return resultcamera && resultstorage
+    }
+
+    private fun requestCameraPermission(){
+        ActivityCompat.requestPermissions(this, cameraPermission, CAMERA_REQUEST_CODE)
+    }
+
+    private fun checkStoragePermissions(): Boolean {
+        val result = (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED))
+        return result
+    }
+
+    private fun requestStoragePermission(){
+        ActivityCompat.requestPermissions(this, storagePermission, STORAGE_REQUEST_CODE)
     }
 
     override fun onRequestPermissionsResult(
@@ -262,6 +183,98 @@ class QRActivity : AppCompatActivity(), View.OnClickListener {
                     } else {
                         showToast("Storage Permissions are Required")
                     }
+                }
+            }
+        }
+    }
+
+    private fun showToast(message: String){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun detectResultFromImage(){
+        try{
+            val inputImage = InputImage.fromFilePath(this, imageUri!!)
+
+            val barcodeResult = barcodeScanner?.process(inputImage)
+                ?.addOnSuccessListener { barcodes ->
+                    extractbarcodeQrCodeInfo(barcodes)
+                }
+                ?.addOnFailureListener{e->
+                    Log.d(TAG, "detectResultFromImage: " , e)
+                }
+
+        }catch (e: Exception){
+            Log.d(TAG, "detectResultFromImage: " , e)
+            showToast("Failed Due to ${e.message}")
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun extractbarcodeQrCodeInfo(barcodes: List<Barcode>) {
+        for (barcode in barcodes) {
+            val bound = barcode.boundingBox
+            val corners = barcode.cornerPoints
+            val rawValue = barcode.rawValue
+            Log.d(TAG,"extractbarcodeQrCodeInfo: rawValue: $rawValue")
+            val valueType = barcode.valueType
+            when(valueType) {
+                Barcode.TYPE_WIFI -> {
+                    val typeWifi = barcode.wifi
+                    val ssid = "${typeWifi?.ssid}"
+                    val password = "${typeWifi?.password}"
+                    var encryptionType = "${typeWifi?.encryptionType}"
+                    if (encryptionType == "1"){
+                        encryptionType = "OPEN"
+                    } else if (encryptionType == "2"){
+                        encryptionType = "WPA"
+                    } else if (encryptionType == "3"){
+                        encryptionType = "WEP"
+                    }
+                    Log.d(TAG,"extractbarcodeQrCodeInfo: TYPE_WIFI")
+                    Log.d(TAG,"extractbarcodeQrCodeInfo: ssid: $ssid")
+                    Log.d(TAG,"extractbarcodeQrCodeInfo: password:$password")
+                    Log.d(TAG,"extractbarcodeQrCodeInfo: encryptionType: $encryptionType")
+                    binding.resultView.text = "TYPE_WIFI \n ssid: $ssid \npassword: $password \nencryptionType: $encryptionType" + "\n\nrawValue : $rawValue"
+                }
+                Barcode.TYPE_URL -> {
+                    val typeUrl = barcode.url
+                    val title = "${typeUrl?.title}"
+                    val url = "${typeUrl?.url}"
+                    Log.d(TAG,"extractbarcodeQrCodeInfo: TYPE_URL")
+                    Log.d(TAG,"extractbarcodeQrCodeInfo: title: $title")
+                    Log.d(TAG,"extractbarcodeQrCodeInfo: url: $url")
+                    binding.resultView.text = "TYPE_URL \ntitle: $title \nurl: $url \n\nrawValue: $rawValue"
+                    // go to the link
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                    startActivity(intent)
+                }
+                Barcode.TYPE_EMAIL -> {
+                    val typeEmail = barcode.email
+                    val address = "${typeEmail?.address}"
+                    val body = "${typeEmail?.body}"
+                    val subject = "${typeEmail?.subject}"
+                    Log.d(TAG,"extractbarcodeQrCodeInfo: TYPE_EMAIL")
+                    Log.d(TAG,"extractbarcodeQrCodeInfo: address:$address")
+                    Log.d(TAG,"extractbarcodeQrCodeInfo: body: $body")
+                    Log.d(TAG,"extractbarcodeQrCodeInfo: subject:$subject")
+                    binding.resultView.text = "TYPE_EMAIL \ntitle: $address \nurl: $body\nsubject: $subject \n\nrawValue : $rawValue"
+                }
+                Barcode.TYPE_CONTACT_INFO -> {
+                    val typeContact = barcode.contactInfo
+                    val title = "${typeContact?.title}"
+                    val organisasi = "${typeContact?.organization}"
+                    val name = "${typeContact?.name}"
+                    val phone = "${typeContact?.phones}"
+                    Log.d(TAG,"extractbarcodeQrCodeInfo: TYPE_CONTACT_INFO")
+                    Log.d(TAG,"extractbarcodeQrCodeInfo: Title: $title")
+                    Log.d(TAG,"extractbarcodeQrCodeInfo: Organization:$organisasi")
+                    Log.d(TAG,"extractbarcodeQrCodeInfo: nama: $name")
+                    Log.d(TAG,"extractbarcodeQrCodeInfo: Phone: $phone")
+                    binding.resultView.text = "TYPE_CONTACT_INFO " + "\ntitle: $title " + "\nnama: $name " + "\norganization: $organisasi " + "\nPhone : $phone" + "\n\nrawValue :$rawValue"
+                }
+                else -> {
+                    binding.resultView.text = "rawValue: $rawValue"
                 }
             }
         }
