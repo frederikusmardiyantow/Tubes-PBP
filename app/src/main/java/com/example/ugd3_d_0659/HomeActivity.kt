@@ -9,9 +9,9 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.ugd3_d_0659.library.QRActivity
 import com.example.ugd3_d_0659.maps.MapsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.fragment_profil.*
 
 class HomeActivity : AppCompatActivity() {
 
@@ -44,11 +44,11 @@ class HomeActivity : AppCompatActivity() {
                     changeFragment(FragmentProfil())
                     true
                 }
-                R.id.menu_barcode ->{
-                    val intent = Intent(this,QRActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
+//                R.id.menu_barcode ->{
+//                    val intent = Intent(this, QRActivity::class.java)
+//                    startActivity(intent)
+//                    true
+//                }
                 else -> false
             }
         }

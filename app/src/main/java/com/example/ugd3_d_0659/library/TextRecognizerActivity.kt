@@ -1,10 +1,9 @@
-package com.example.ugd3_d_0659
+package com.example.ugd3_d_0659.library
 
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.ugd3_d_0659.R
 import com.google.android.gms.vision.Frame
 import com.google.android.gms.vision.text.TextRecognizer
 import com.google.android.material.button.MaterialButton
@@ -30,15 +30,20 @@ class TextRecognizerActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var cameraPermissions:Array<String>
     private lateinit var storagePermission:Array<String>
     private var imageUri: Uri? =null
-    private val imageTv = findViewById<ImageView>(R.id.imageTv)
-    private val tv = findViewById<TextView>(R.id.resultView)
+    private lateinit var imageTv : ImageView
+    private lateinit var tv : TextView
+    private lateinit var cameraBtn : MaterialButton
+    private lateinit var scanBtn : MaterialButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_text_recognizer)
 
-        val cameraBtn = findViewById<MaterialButton>(R.id.cameraBtn)
-        val scanBtn = findViewById<MaterialButton>(R.id.scanBtn)
+        cameraBtn = findViewById(R.id.cameraBtn)
+        scanBtn = findViewById(R.id.scanBtn)
 
+        imageTv = findViewById(R.id.imageTv)
+        tv = findViewById(R.id.resultView)
 
         cameraBtn.setOnClickListener(this)
         scanBtn.setOnClickListener(this)

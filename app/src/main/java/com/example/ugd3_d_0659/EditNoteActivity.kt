@@ -19,7 +19,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.ugd3_d_0659.webAPI.AddEditUserActivity
+import com.example.ugd3_d_0659.library.TextRecognizerActivity
 import com.example.ugd3_d_0659.webAPI.api.NoteApi
 import com.example.ugd3_d_0659.webAPI.models.Note
 import com.google.gson.Gson

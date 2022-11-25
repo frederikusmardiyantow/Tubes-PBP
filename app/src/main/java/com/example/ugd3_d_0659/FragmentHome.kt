@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ugd3_d_0659.PagerIndicatorForRecyclerViews.OnPagerNumberChangeListener
-import com.example.ugd3_d_0659.PagerIndicatorForRecyclerViews.RVMPFavoritAdapter
+import com.example.ugd3_d_0659.library.PagerIndicatorForRecyclerViews.OnPagerNumberChangeListener
+import com.example.ugd3_d_0659.library.PagerIndicatorForRecyclerViews.RVMPFavoritAdapter
 import com.example.ugd3_d_0659.databinding.FragmentHomeBinding
 import com.rbrooks.indefinitepagerindicator.IndefinitePagerIndicator
 

@@ -18,6 +18,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.ugd3_d_0659.camera.CameraActivity
 import com.example.ugd3_d_0659.databinding.FragmentProfilBinding
+import com.example.ugd3_d_0659.library.QRActivity
 import com.example.ugd3_d_0659.webAPI.models.User
 import com.example.ugd3_d_0659.webAPI.AddEditUserActivity
 import com.example.ugd3_d_0659.webAPI.api.UserApi
@@ -63,6 +64,11 @@ class FragmentProfil : Fragment() {
             val moveEdit = Intent(activity, AddEditUserActivity::class.java)
             moveEdit.putExtra("id", idUser)
             startActivity(moveEdit)
+        }
+
+        btnScannerDiProfil.setOnClickListener {
+            val moveScanner = Intent(activity, QRActivity::class.java)
+            startActivity(moveScanner)
         }
 
         imageProfil.setOnClickListener {

@@ -12,7 +12,7 @@ class UserApi {
 //        val UPDATE_URL = BASE_URL + "user/"
 //        //val DELETE_URL = BASE_URL + "user/"ip
 
-        val BASE_URL = "http://10.53.9.236/api_tubes_pbp/public/api/"
+        val BASE_URL = "http://192.168.18.186/api_tubes_pbp/public/api/"
 
         val GET_ALL_URL = BASE_URL + "user"
         val GET_BY_ID_URL = BASE_URL + "user/"

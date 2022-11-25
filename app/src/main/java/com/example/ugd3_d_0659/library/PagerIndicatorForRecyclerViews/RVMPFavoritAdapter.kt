@@ -1,4 +1,4 @@
-package com.example.ugd3_d_0659.PagerIndicatorForRecyclerViews
+package com.example.ugd3_d_0659.library.PagerIndicatorForRecyclerViews
 
 import android.content.Context
 import android.preference.PreferenceManager
@@ -23,7 +23,10 @@ class RVMPFavoritAdapter (private val context: Context) : RecyclerView.Adapter<R
     }
 
     override fun getItemCount(): Int = PreferenceManager.getDefaultSharedPreferences(context)
-        .getInt(PagerNumberPickerDialogPreference.KEY_NUM_PAGES, PagerNumberPickerDialogPreference.DEFAULT_PAGES)
+        .getInt(
+            PagerNumberPickerDialogPreference.KEY_NUM_PAGES,
+            PagerNumberPickerDialogPreference.DEFAULT_PAGES
+        )
 
     class viewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         fun bind(mpFav: MPFavorit) {

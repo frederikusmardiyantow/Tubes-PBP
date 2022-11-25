@@ -15,6 +15,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.bumptech.glide.Glide
 import com.example.ugd3_d_0659.databinding.ActivityMainBinding
 import com.example.ugd3_d_0659.webAPI.models.User
 import com.example.ugd3_d_0659.webAPI.AddEditUserActivity
@@ -57,6 +58,11 @@ class MainActivity : AppCompatActivity() {
         etPassword = binding.etLayoutPassword
         etBtnRegister = binding.btnRegistration
         etBtnLogin = binding.btnLogin
+
+        Glide.with(this)
+            .load("https://pmb.dalwa.ac.id/assets/img/register.png")
+            .fitCenter()
+            .into(binding.imageView)
 
         notificationManager =
             getSystemService(

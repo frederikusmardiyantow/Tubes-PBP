@@ -1,5 +1,6 @@
-package com.example.ugd3_d_0659
+package com.example.ugd3_d_0659.library
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
@@ -14,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.ugd3_d_0659.R
 import com.example.ugd3_d_0659.databinding.ActivityQractivityBinding
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
@@ -102,6 +104,7 @@ class QRActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun extractbarcodeQrCodeInfo(barcodes: List<Barcode>) {
         for (barcode in barcodes) {
             val bound = barcode.boundingBox
@@ -192,12 +195,8 @@ class QRActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun checkStoragePermision(): Boolean {
-        val resultcamera = (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_GRANTED)
-        val resultstorage = (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED)
-
-        return resultcamera && resultstorage
+        val result = (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED))
+        return result
     }
 
     private fun requestCameraPermission() {
@@ -235,5 +234,36 @@ class QRActivity : AppCompatActivity(), View.OnClickListener {
                 == PackageManager.PERMISSION_GRANTED)
 
         return resultcamera && resultstorage
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when(requestCode){
+            CAMERA_REQUEST_CODE -> {
+                if(grantResults.isNotEmpty()){
+                    val cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    val storageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED
+                    if(cameraAccepted && storageAccepted){
+                        pickImageCamera()
+                    } else {
+                        showToast("Camera & Storage Permissions are Required")
+                    }
+                }
+            }
+            STORAGE_REQUEST_CODE -> {
+                if(grantResults.isNotEmpty()){
+                    val storageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    if(storageAccepted){
+                        pickImageGallery()
+                    } else {
+                        showToast("Storage Permissions are Required")
+                    }
+                }
+            }
+        }
     }
 }
