@@ -44,6 +44,11 @@ class HomeActivity : AppCompatActivity() {
                     changeFragment(FragmentProfil())
                     true
                 }
+                R.id.menu_barcode ->{
+                    val intent = Intent(this,QRActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
                 else -> false
             }
         }

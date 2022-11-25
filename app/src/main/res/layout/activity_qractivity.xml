@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="Scanner QR Pelajaran"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:textStyle="bold"
+            android:layout_margin="15dp"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Headline"/>
+
+        <ImageView
+            android:id="@+id/imageTv"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginLeft="90dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_baseline_blur_on_24"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="6dp"
+            android:orientation="horizontal"
+            android:background="#FAE197">
+
+            <ImageButton
+                android:id="@+id/cameraBtn"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="#FFF3CF"
+                android:src="@drawable/ic_baseline_photo_camera_24"
+                app:tint="#D38108"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"
+                />
+
+            <ImageButton
+                android:id="@+id/galleryBtn"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="#FFF3CF"
+                android:src="@drawable/ic_baseline_insert_drive_file_24"
+                app:tint="#D38108"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:text="Hasil : "/>
+
+        <TextView
+            android:id="@+id/resultView"
+            android:textAlignment="viewStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/scanBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="290dp"
+            android:backgroundTint="#FFF3CC"
+            android:textColor="@color/black"
+            android:text="Scan Hasil"
+            />
+
+
+
+
+    </LinearLayout>
+
+</ScrollView>
