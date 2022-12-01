@@ -84,18 +84,19 @@ class AddEditUserActivity : AppCompatActivity() {
         val tvTitle:TextView = binding.tvTitle
         val id = intent.getLongExtra("id", -1)
         if(id== -1L){
-            tvTitle.setText("Registrasi")
-            btnSave.setOnClickListener { validation(id) }
+            tvTitle.setText("REGISTRASI AKUN")
+            btnSave.setOnClickListener { createUser() }
         }else{
-            tvTitle.setText("Ubah Data")
+            tvTitle.setText("UBAH DATA AKUN")
             getUserById(id)
-            btnSave.setOnClickListener { validation(id) }
+            btnSave.setOnClickListener { updateUser(id) }
         }
 
         etTglLahir!!.setOnFocusChangeListener { view, b ->
             val datePicker= DatePickerDialog(this,
                 DatePickerDialog.OnDateSetListener{ view, year, month, dayOfMonth ->
-                    etTglLahir!!.setText("${dayOfMonth}/${(month.toInt()+1)}/${year}")
+                    val day2digit = String.format("%02d", dayOfMonth)
+                    etTglLahir!!.setText("${day2digit}/${(month.toInt()+1)}/${year}")
 
             }, myYear, myMonth, myDay)
 
@@ -175,29 +176,48 @@ class AddEditUserActivity : AppCompatActivity() {
                 val gson = Gson()
                 val jsonObject = JSONObject(response)
                 val jsonArray = jsonObject.getJSONObject("user")
-                var user = gson.fromJson(jsonArray.toString(), User::class.java)
+                val users = gson.fromJson(jsonArray.toString(), User::class.java)
 
-                if(user != null)
+                if(users != null)
                     FancyToast.makeText(this@AddEditUserActivity,"Registrasi Sukses",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,false).show();
 //                    Toast.makeText(this@AddEditUserActivity, "Data berhasil ditambahkan", Toast.LENGTH_SHORT).show()
 
-
                 val returnIntent = Intent()
                 setResult(RESULT_OK, returnIntent)
-                //finish()
+//                finish()
+                mBundle.putString("username",user.username)
+                mBundle.putString("password",user.password)
+
+                val moveMain = Intent(this@AddEditUserActivity, MainActivity::class.java)
+                moveMain.putExtra("login", mBundle)
+                startActivity(moveMain)
+                sendNotification()
 
                 setLoading(false)
             }, Response.ErrorListener { error ->
                 setLoading(false)
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
-                    val errors = JSONObject(responseBody)
-                    FancyToast.makeText(this@AddEditUserActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
-//                    Toast.makeText(
-//                        this,
-//                        errors.getString("message"),
-//                        Toast.LENGTH_SHORT
-//                    ).show()
+                    if(error.networkResponse.statusCode == 422){
+                        val jsonObject = JSONObject(responseBody)
+                        val jsonArray = jsonObject.getJSONObject("errors")
+                        println(jsonArray.toString(4))
+                        for(i in jsonArray.keys()){
+                            when(i){
+                                "nama"      -> etNama!!.error = jsonArray.getJSONArray(i).getString(0)
+                                "username"  -> etUsername!!.error = jsonArray.getJSONArray(i).getString(0)
+                                "email"     -> etEmail!!.error = jsonArray.getJSONArray(i).getString(0)
+                                "password"  -> etPassword!!.error = jsonArray.getJSONArray(i).getString(0)
+                                "konfirmasiPassword" -> etKonfirmasiPassword!!.error = jsonArray.getJSONArray(i).getString(0)
+                                "tglLahir"  -> etTglLahir!!.error = jsonArray.getJSONArray(i).getString(0)
+                                "telp"      -> etTelp!!.error = jsonArray.getJSONArray(i).getString(0)
+                            }
+                        }
+                        FancyToast.makeText(this@AddEditUserActivity,jsonObject.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+                    }else{
+                        val errors = JSONObject(responseBody)
+                        FancyToast.makeText(this@AddEditUserActivity,errors.getString("message") + "rwqrqw",FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+                    }
                 } catch (e: Exception){
                     FancyToast.makeText(this@AddEditUserActivity,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
 //                    Toast.makeText(this@AddEditUserActivity, e.message, Toast.LENGTH_SHORT).show()
@@ -224,13 +244,6 @@ class AddEditUserActivity : AppCompatActivity() {
 
         queue!!.add(stringRequest)
 
-        mBundle.putString("username",user.username)
-        mBundle.putString("password",user.password)
-
-        val moveMain = Intent(this@AddEditUserActivity, MainActivity::class.java)
-        moveMain.putExtra("login", mBundle)
-        startActivity(moveMain)
-        sendNotification()
     }
 
     private fun updateUser(id: Long){
@@ -254,7 +267,6 @@ class AddEditUserActivity : AppCompatActivity() {
                 val jsonArray = jsonObject.getJSONObject("data")
                 var user = gson.fromJson(jsonArray.toString(), User::class.java)
 
-                println("masuk ke stringRequest")
                 if(user != null){
                     FancyToast.makeText(this@AddEditUserActivity,"Edit Profile Sukses",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,false).show();
 //                    Toast.makeText(this@AddEditUserActivity, "Data berhasil diubah", Toast.LENGTH_SHORT).show()
@@ -272,16 +284,28 @@ class AddEditUserActivity : AppCompatActivity() {
                 setLoading(false)
             }, Response.ErrorListener { error ->
                 setLoading(false)
-                println("masuk ke error")
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
-                    val errors = JSONObject(responseBody)
-                    FancyToast.makeText(this@AddEditUserActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
-//                    Toast.makeText(
-//                        this,
-//                        errors.getString("message"),
-//                        Toast.LENGTH_SHORT
-//                    ).show()
+                    if(error.networkResponse.statusCode == 422){
+                        val jsonObject = JSONObject(responseBody)
+                        val jsonArray = jsonObject.getJSONObject("errors")
+                        for(i in jsonArray.keys()){
+                            when(i){
+                                "nama"      -> etNama!!.error = jsonArray.getJSONArray(i).getString(0)
+                                "username"  -> etUsername!!.error = jsonArray.getJSONArray(i).getString(0)
+                                "email"     -> etEmail!!.error = jsonArray.getJSONArray(i).getString(0)
+                                "password"  -> etPassword!!.error = jsonArray.getJSONArray(i).getString(0)
+                                "konfirmasiPassword" -> etKonfirmasiPassword!!.error = jsonArray.getJSONArray(i).getString(0)
+                                "tglLahir"  -> etTglLahir!!.error = jsonArray.getJSONArray(i).getString(0)
+                                "telp"      -> etTelp!!.error = jsonArray.getJSONArray(i).getString(0)
+                            }
+                        }
+                        FancyToast.makeText(this@AddEditUserActivity,jsonObject.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+                    }else{
+                        val errors = JSONObject(responseBody)
+                        FancyToast.makeText(this@AddEditUserActivity,errors.getString("message") + "rwqrqw",FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+                    }
+
                 } catch (e: Exception){
                     FancyToast.makeText(this@AddEditUserActivity,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
 //                    Toast.makeText(this@AddEditUserActivity, e.message, Toast.LENGTH_SHORT).show()
@@ -311,129 +335,48 @@ class AddEditUserActivity : AppCompatActivity() {
 
     private fun validation(id:Long){
 
-        var checkRegis = true
-        var checkUsername = false
-        val user = User(
-            etNama!!.text.toString(),
-            etUsername!!.text.toString(),
-            etEmail!!.text.toString(),
-            etPassword!!.text.toString(),
-            etKonfirmasiPassword!!.text.toString(),
-            etTglLahir!!.text.toString(),
-            etTelp!!.text.toString(),
-        )
-        val myPreference = "myPref"
-        var sharedPreferences: SharedPreferences? = null
-
         val stringRequest : StringRequest = object:
             StringRequest(Method.GET, UserApi.GET_ALL_URL, Response.Listener { response ->
-                val gson = Gson()
-                val jsonObject = JSONObject(response)
-                val jsonArray = jsonObject.getJSONArray("data")
-                var Users : Array<User> = gson.fromJson(jsonArray.toString(), Array<User>::class.java)
-
-                for(temp in Users){
-                    if(id!=-1L){
-                        sharedPreferences = getSharedPreferences(myPreference, Context.MODE_PRIVATE)
-                        val namaUserLogin = sharedPreferences!!.getString("user","")
-                        if(temp.username == namaUserLogin) checkUsername = false
-                    }else{
-                        if(temp.username == user.username) checkUsername = true
-                    }
-                }
-
-                if(user.nama.isEmpty()){
-                    etNama!!.error = "Nama tidak boleh kosong"
-                    checkRegis = false
-                } else {
-                    etNama!!.error = null
-                }
-                if(user.username.isEmpty()){
-                    etUsername!!.error = "Username tidak boleh kosong"
-                    checkRegis = false
-                }else {
-                    etUsername!!.error = null
-                }
-                if(checkUsername == true){
-                    etUsername!!.error = "Username sudah digunakan"
-//                    Toast.makeText(this@AddEditActivity, "Username sudah pernah terdaftar..", Toast.LENGTH_SHORT).show()
-                    checkRegis = false
+                if(id== -1L){
+                    createUser()
                 }else{
-                    etUsername!!.error = null
-                    FancyToast.makeText(this@AddEditUserActivity,"Username diterima",FancyToast.LENGTH_LONG,FancyToast.DEFAULT,true).show();
-//                    Toast.makeText(this@AddEditUserActivity, "Username diterima", Toast.LENGTH_SHORT).show()
+                    updateUser(id)
                 }
-
-                if(user.email.isEmpty()){
-                    etEmail!!.error = "Email tidak boleh kosong"
-                    checkRegis = false
-                } else {
-                    etEmail!!.error = null
-                }
-
-                if(!user.email.contains("@") || !user.email.endsWith(".com")){
-                    etEmail!!.error = "Email tidak valid!"
-                    checkRegis = false
-                } else {
-                    etEmail!!.error = null
-                }
-
-                if(user.password.isEmpty()){
-                    etPassword!!.error = "Password tidak boleh kosong"
-                    checkRegis = false
-                } else {
-                    etPassword!!.error = null
-                }
-
-                if(user.konfirmasiPassword.isEmpty()){
-                    etKonfirmasiPassword!!.error = "Password tidak boleh kosong"
-                    checkRegis = false
-                } else {
-                    etKonfirmasiPassword!!.error = null
-                }
-
-                if(user.password.length!=8 || user.konfirmasiPassword.length!=8){
-                    etPassword!!.error = "Password harus 8 karakter!"
-                    etKonfirmasiPassword!!.error = "Password harus 8 karakter!"
-                    checkRegis = false
-                }else if(user.konfirmasiPassword!=user.password){
-                    etPassword!!.error = "Password tidak sama!"
-                    etKonfirmasiPassword!!.error = "Password tidak sama!"
-                    checkRegis = false
-                } else {
-                    etPassword!!.error = null
-                    etKonfirmasiPassword!!.error = null
-                }
-
-                if(user.tglLahir.isEmpty()){
-                    etTglLahir!!.error = "Tanggal lahir tidak boleh kosong"
-                    checkRegis = false
-                } else {
-                    etTglLahir!!.error = null
-                }
-
-                if(user.telp.isEmpty()){
-                    etTelp!!.error = "Nomor telepon tidak boleh kosong"
-                    checkRegis = false
-                } else {
-                    etTelp!!.error = null
-                }
-
-                if(checkRegis==true){
-                    if(id== -1L){
-                        createUser()
-                    }else{
-                        updateUser(id)
-                    }
-                }
-
             }, Response.ErrorListener { error ->
                 try {
                     val responseBody =
                         String(error.networkResponse.data, StandardCharsets.UTF_8)
-                    val errors = JSONObject(responseBody)
-                    FancyToast.makeText(this@AddEditUserActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
-//                    Toast.makeText(this@AddEditUserActivity, errors.getString("message"), Toast.LENGTH_SHORT).show()
+                    if(error.networkResponse.statusCode == 400){
+                        val jsonObject = JSONObject(responseBody)
+                        val jsonArray = jsonObject.getJSONObject("message")
+                        for(i in jsonArray.keys()){
+                            if(i=="nama"){
+                                etNama!!.error = jsonArray.getJSONArray(i).getString(0)
+                            }
+                            if(i=="username"){
+                                etUsername!!.error = jsonArray.getJSONArray(i).getString(0)
+                            }
+                            if(i=="email"){
+                                etEmail!!.error = jsonArray.getJSONArray(i).getString(0)
+                            }
+                            if(i=="password"){
+                                etPassword!!.error = jsonArray.getJSONArray(i).getString(0)
+                            }
+                            if(i=="konfirmasiPassword"){
+                                etKonfirmasiPassword!!.error = jsonArray.getJSONArray(i).getString(0)
+                            }
+                            if(i=="tglLahir"){
+                                etTglLahir!!.error = jsonArray.getJSONArray(i).getString(0)
+                            }
+                            if(i=="telp"){
+                                etTelp!!.error = jsonArray.getJSONArray(i).getString(0)
+                            }
+                        }
+                    }else{
+                        val errors = JSONObject(responseBody)
+                        FancyToast.makeText(this@AddEditUserActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+//                        Toast.makeText(this@AddEditUserActivity, errors.getString("message"), Toast.LENGTH_SHORT).show()
+                    }
                 } catch (e: Exception){
                     FancyToast.makeText(this@AddEditUserActivity,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
 //                    Toast.makeText(this@AddEditUserActivity, e.message, Toast.LENGTH_SHORT).show()

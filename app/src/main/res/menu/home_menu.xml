@@ -11,10 +11,10 @@
         android:icon="@drawable/ic_mata_kuliah_24"
         android:title="Mata Pelajaran"/>
     <item
-        android:id="@+id/menu_capaian"
+        android:id="@+id/menu_buku"
         android:enabled="true"
-        android:icon="@drawable/ic_reward_24"
-        android:title="Capaian"/>
+        android:icon="@drawable/ic_baseline_collections_24"
+        android:title="Buku"/>
     <item
         android:id="@+id/menu_maps"
         android:enabled="true"

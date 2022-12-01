@@ -9,7 +9,7 @@ class MPFavorit (var mataPelajaran: String, var gambar:Int) {
             MPFavorit("Bahasa Indonesia", R.drawable.gambar_bindonesia),
             MPFavorit("Pendidikan Jasmani", R.drawable.gambar_penjasorkes),
             MPFavorit("IPA",  R.drawable.gambar_ipa),
-            MPFavorit("PKN", R.drawable.gambar_pkn)
+//            MPFavorit("PKN", R.drawable.gambar_pkn)
         )
     }
 }

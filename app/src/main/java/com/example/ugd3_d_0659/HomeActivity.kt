@@ -9,7 +9,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.ugd3_d_0659.library.QRActivity
 import com.example.ugd3_d_0659.maps.MapsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -31,8 +30,9 @@ class HomeActivity : AppCompatActivity() {
                     changeFragment(FragmentMataPelajaran())
                     true
                 }
-                R.id.menu_capaian -> {
-                    changeFragment(FragmentCapaian())
+                R.id.menu_buku -> {
+                    val intent = Intent(this, MenuBuku::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.menu_maps ->{
@@ -44,11 +44,6 @@ class HomeActivity : AppCompatActivity() {
                     changeFragment(FragmentProfil())
                     true
                 }
-//                R.id.menu_barcode ->{
-//                    val intent = Intent(this, QRActivity::class.java)
-//                    startActivity(intent)
-//                    true
-//                }
                 else -> false
             }
         }

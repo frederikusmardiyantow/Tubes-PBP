@@ -10,6 +10,7 @@ import android.widget.NumberPicker
 import androidx.fragment.app.DialogFragment
 import com.example.ugd3_d_0659.R
 import com.example.ugd3_d_0659.entity.MPFavorit
+import com.example.ugd3_d_0659.entity.MPFavorit.Companion.listOfMPFavorit
 
 class PagerNumberPickerDialogPreference : DialogFragment() {
 
@@ -17,7 +18,7 @@ class PagerNumberPickerDialogPreference : DialogFragment() {
         const val KEY_NUM_PAGES = "num_pages"
 
         private const val MIN_PAGES = 0
-        private val MAX_PAGES = MPFavorit.listOfMPFavorit.size
+        private val MAX_PAGES = listOfMPFavorit.size
         const val DEFAULT_PAGES = 3
     }
 
