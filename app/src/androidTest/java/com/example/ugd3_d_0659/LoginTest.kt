@@ -3,8 +3,7 @@ package com.example.ugd3_d_0659
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.Espresso.pressBack
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.*
@@ -15,8 +14,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import org.hamcrest.Description
 import org.hamcrest.Matcher
-import org.hamcrest.Matchers.`is`
-import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers
 import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
@@ -24,7 +22,7 @@ import org.junit.runner.RunWith
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class MainActivityTest {
+class LoginTest {
 
     @Rule
     @JvmField
@@ -32,14 +30,14 @@ class MainActivityTest {
 
     @Test
     fun mainActivityTest() {
-        val materialButton = onView(
-            allOf(
+        val materialButton = Espresso.onView(
+            Matchers.allOf(
                 withId(R.id.btnLogin), withText("Login"),
                 childAtPosition(
-                    allOf(
+                    Matchers.allOf(
                         withId(R.id.linearLayout),
                         childAtPosition(
-                            withClassName(`is`("androidx.constraintlayout.widget.ConstraintLayout")),
+                            withClassName(Matchers.`is`("androidx.constraintlayout.widget.ConstraintLayout")),
                             3
                         )
                     ),
@@ -48,10 +46,10 @@ class MainActivityTest {
             )
         )
         materialButton.perform(scrollTo(), click())
-        onView(isRoot()).perform(waitFor(3000))
+        Espresso.onView(isRoot()).perform(waitFor(3000))
 
-        val textInputEditText = onView(
-            allOf(
+        val textInputEditText = Espresso.onView(
+            Matchers.allOf(
                 withId(R.id.etLayoutUsername),
                 childAtPosition(
                     childAtPosition(
@@ -64,14 +62,14 @@ class MainActivityTest {
             )
         )
         textInputEditText.perform(replaceText("fred113"), closeSoftKeyboard())
-        val materialButton2 = onView(
-            allOf(
+        val materialButton2 = Espresso.onView(
+            Matchers.allOf(
                 withId(R.id.btnLogin), withText("Login"),
                 childAtPosition(
-                    allOf(
+                    Matchers.allOf(
                         withId(R.id.linearLayout),
                         childAtPosition(
-                            withClassName(`is`("androidx.constraintlayout.widget.ConstraintLayout")),
+                            withClassName(Matchers.`is`("androidx.constraintlayout.widget.ConstraintLayout")),
                             3
                         )
                     ),
@@ -80,10 +78,10 @@ class MainActivityTest {
             )
         )
         materialButton2.perform(scrollTo(), click())
-        onView(isRoot()).perform(waitFor(3000))
+        Espresso.onView(isRoot()).perform(waitFor(3000))
 
-        val textInputEditText2 = onView(
-            allOf(
+        val textInputEditText2 = Espresso.onView(
+            Matchers.allOf(
                 withId(R.id.etLayoutPassword),
                 childAtPosition(
                     childAtPosition(
@@ -96,14 +94,14 @@ class MainActivityTest {
             )
         )
         textInputEditText2.perform(replaceText("12345678"), closeSoftKeyboard())
-        val materialButton3 = onView(
-            allOf(
+        val materialButton3 = Espresso.onView(
+            Matchers.allOf(
                 withId(R.id.btnLogin), withText("Login"),
                 childAtPosition(
-                    allOf(
+                    Matchers.allOf(
                         withId(R.id.linearLayout),
                         childAtPosition(
-                            withClassName(`is`("androidx.constraintlayout.widget.ConstraintLayout")),
+                            withClassName(Matchers.`is`("androidx.constraintlayout.widget.ConstraintLayout")),
                             3
                         )
                     ),
@@ -112,7 +110,7 @@ class MainActivityTest {
             )
         )
         materialButton3.perform(scrollTo(), click())
-        onView(isRoot()).perform(waitFor(3000))
+        Espresso.onView(isRoot()).perform(waitFor(3000))
     }
 
     private fun childAtPosition(
