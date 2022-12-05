@@ -211,37 +211,31 @@ class MainActivity : AppCompatActivity() {
                 val jsonArray = jsonObject.getJSONArray("data")
                 var users : Array<User> = gson.fromJson(jsonArray.toString(), Array<User>::class.java)
 
-                for(user in users){
-                    println("masuk")
-                    if(user.username == username && user.password == password){
-                        editorLogin.putLong("idUser", user.id!!)
-                        editorLogin.commit()
-                        editor.putString("user", user.username)
-                        editor.putString("password", user.password)
-                        editor.putString("nama", user.nama)
-                        editor.commit()
-                        loginCek = true
-                    }
+                if (users != null){
+                    FancyToast.makeText(this@MainActivity,"Login Sukses",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,false).show();
                 }
 
-                if(loginCek == true){
-                    FancyToast.makeText(this@MainActivity,"Login Berhasil\nSelamat Datang..",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,true).show();
-//                    Toast.makeText(this@MainActivity, "Selamat Datang..", Toast.LENGTH_SHORT).show()
-                    val moveHome = Intent(this@MainActivity, HomeActivity::class.java)
-                    sendNotification()
-                    startActivity(moveHome)
-                }else{
-                    FancyToast.makeText(this@MainActivity,"Data Tidak ditemukan",FancyToast.LENGTH_LONG,FancyToast.WARNING,true).show();
-//                    Toast.makeText(this@MainActivity, "Data Tidak ditemukan", Toast.LENGTH_SHORT).show()
-                }
-
+                val returnIntent = Intent()
+                setResult(RESULT_OK,returnIntent)
             }, Response.ErrorListener { error ->
                 try {
                     val responseBody =
                         String(error.networkResponse.data, StandardCharsets.UTF_8)
-                    val errors = JSONObject(responseBody)
-                    FancyToast.makeText(this@MainActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
-//                    Toast.makeText(this@MainActivity, errors.getString("message"), Toast.LENGTH_SHORT).show()
+                    if(error.networkResponse.statusCode == 422){
+                        val jsonObject = JSONObject(responseBody)
+                        val jsonArray = jsonObject.getJSONObject("errors")
+                        println(jsonArray.toString(4))
+                        for(i in jsonArray.keys()){
+                            when(i){
+                                "username"      ->etUsername!!.error = jsonArray.getJSONArray(i).getString(0)
+                                "password"      ->etPassword!!.error = jsonArray.getJSONArray(i).getString(0)
+                            }
+                        }
+                        FancyToast.makeText(this@MainActivity,jsonObject.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+                    }else{
+                        val errors = JSONObject(responseBody)
+                        FancyToast.makeText(this@MainActivity,errors.getString("massage") + "Gagal",FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+                    }
                 } catch (e: Exception){
                     FancyToast.makeText(this@MainActivity,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
 //                    Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_SHORT).show()
@@ -252,6 +246,16 @@ class MainActivity : AppCompatActivity() {
                 val headers = HashMap<String, String>()
                 headers["Accept"] = "application/json"
                 return headers
+            }
+            @Throws(AuthFailureError::class)
+            override fun getBody():ByteArray{
+                val gson = Gson()
+                val requestBody = gson.toJson(username)
+                return requestBody.toByteArray(StandardCharsets.UTF_8)
+            }
+
+            override fun getBodyContentType(): String {
+                return "application/json"
             }
 
         }
