@@ -17,7 +17,7 @@ class UserApi {
 
         val GET_ALL_URL = BASE_URL + "user"
         val GET_BY_ID_URL = BASE_URL + "user/"
-        val LOGIN = BASE_URL + "login"
+        val LOGIN = BASE_URL + "user/login"
         //val GET_ID_BY_USERNAME = BASE_URL + "user";
 //        val GET_BY_USERNAME_URL = BASE_URL + "user?username="
         val ADD_URL = BASE_URL + "user"

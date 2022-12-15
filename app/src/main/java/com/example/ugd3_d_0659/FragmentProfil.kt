@@ -31,7 +31,9 @@ import java.nio.charset.StandardCharsets
 class FragmentProfil : Fragment() {
     private val myLoginPreference = "myLogin"
     private var idUser:Long = 0
+    private lateinit var pass:String
     var sharedPreferencesLogin: SharedPreferences? = null
+    var SharePrefPassword: SharedPreferences? = null
     private var queue: RequestQueue? = null
     private var binding: FragmentProfilBinding? = null
 
@@ -54,9 +56,11 @@ class FragmentProfil : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedPreferencesLogin = activity?.getSharedPreferences(myLoginPreference, Context.MODE_PRIVATE)
+        SharePrefPassword = activity?.getSharedPreferences("myPref", Context.MODE_PRIVATE)
 
         queue = Volley.newRequestQueue(requireActivity())
         idUser = sharedPreferencesLogin!!.getLong("idUser",0)
+        pass = SharePrefPassword!!.getString("password","")!!
 
         getUserById(idUser)
 
@@ -103,7 +107,7 @@ class FragmentProfil : Fragment() {
                     binding?.namaDiProfil?.setText(User.nama)
                     binding?.usernameDiProfil?.setText(User.username)
                     binding?.emailDiProfil?.setText(User.email)
-                    binding?.passwordDiProfil?.setText(User.password)
+                    binding?.passwordDiProfil?.setText(pass)
                     binding?.tanggalDiProfil?.setText(User.tglLahir)
                     binding?.telpDiProfil?.setText(User.telp)
 

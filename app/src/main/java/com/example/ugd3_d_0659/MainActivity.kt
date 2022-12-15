@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
     var sharedPreferences: SharedPreferences? = null
     var sharedPreferencesLogin: SharedPreferences? = null
     private var queue: RequestQueue? = null
-    private var loginCek = false
 
     private var notificationManager: NotificationManager? = null
     private val channelID = "Tubes.news"
@@ -100,29 +99,69 @@ class MainActivity : AppCompatActivity() {
         }
 
         etBtnLogin!!.setOnClickListener {
-            var checkLogin = false
-            var username: String = etUsername!!.text.toString()
-            var password: String = etPassword!!.text.toString()
+            sharedPreferencesLogin = getSharedPreferences(myLoginPreference, Context.MODE_PRIVATE)
+            val editorLogin: SharedPreferences.Editor = sharedPreferencesLogin!!.edit()
+            sharedPreferences = getSharedPreferences(myPreference, Context.MODE_PRIVATE)
+            val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
 
+            val stringRequest : StringRequest = object:
+                StringRequest(Method.POST, UserApi.LOGIN, Response.Listener { response ->
+                    val gson = Gson()
 
-            if (username.isEmpty()) {
-                etUsername!!.error = "Username harus terisi!"
-                checkLogin = false
-            } else {
-                etUsername!!.error = null
+                    val jsonObject = JSONObject(response)
+                    val jsonArray = jsonObject.getJSONObject("user")
+                    var users = gson.fromJson(jsonArray.toString(), User::class.java)
+
+                    editorLogin.putLong("idUser", users.id!!.toLong())
+                    editorLogin.commit()
+                    editor.putString("user", users.username)
+                    editor.putString("password", binding.etLayoutPassword.text.toString())
+                    editor.putString("nama", users.nama)
+                    editor.commit()
+
+                    FancyToast.makeText(this@MainActivity,"Login Sukses",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,false).show();
+                    val moveHome = Intent(this@MainActivity, HomeActivity::class.java)
+                    sendNotification()
+                    startActivity(moveHome)
+
+                }, Response.ErrorListener { error ->
+                    try {
+                        val responseBody =
+                            String(error.networkResponse.data, StandardCharsets.UTF_8)
+                        if(error.networkResponse.statusCode == 400){
+                            val jsonObject = JSONObject(responseBody)
+                            val jsonArray = jsonObject.getJSONObject("message")
+                            for(i in jsonArray.keys()){
+                                when(i){
+                                    "username"      ->etUsername!!.error = jsonArray.getJSONArray(i).getString(0)
+                                    "password"      ->etPassword!!.error = jsonArray.getJSONArray(i).getString(0)
+                                }
+                            }
+                            FancyToast.makeText(this@MainActivity,"Login Gagal,\nCek Kembali Username & Password!",FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
+                        }else{
+                            val errors = JSONObject(responseBody)
+                            FancyToast.makeText(this@MainActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
+                        }
+                    } catch (e: Exception){
+                        FancyToast.makeText(this@MainActivity,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
+//                    Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_SHORT).show()
+                    }
+                }) {
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String> {
+                    val headers = HashMap<String, String>()
+                    headers["Accept"] = "application/json"
+                    return headers
+                }
+
+                override fun getParams(): Map<String, String>? {
+                    val params = HashMap<String, String>()
+                    params["username"] = binding.etLayoutUsername.text.toString()
+                    params["password"] = binding.etLayoutPassword.text.toString()
+                    return params
+                }
             }
-
-            if (password.isEmpty()) {
-                etPassword!!.error = "Password harus terisi"
-                checkLogin = false
-            } else {
-                etPassword!!.error = null
-            }
-
-
-            cekLogin(username, password)
-
-
+            queue!!.add(stringRequest)
         }
     }
 
@@ -197,53 +236,52 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun cekLogin(username:String, password:String){
+    private fun cekLogin(){
         sharedPreferencesLogin = getSharedPreferences(myLoginPreference, Context.MODE_PRIVATE)
         val editorLogin: SharedPreferences.Editor = sharedPreferencesLogin!!.edit()
         sharedPreferences = getSharedPreferences(myPreference, Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
 
         val stringRequest : StringRequest = object:
-            StringRequest(Method.GET, UserApi.GET_ALL_URL, Response.Listener { response ->
+            StringRequest(Method.POST, UserApi.LOGIN, Response.Listener { response ->
                 val gson = Gson()
 
                 val jsonObject = JSONObject(response)
-                val jsonArray = jsonObject.getJSONArray("data")
-                var users : Array<User> = gson.fromJson(jsonArray.toString(), Array<User>::class.java)
+                val jsonArray = jsonObject.getJSONArray("user")
+                var users = gson.fromJson(jsonArray.toString(), User::class.java)
 
-                for(user in users){
-                    println("masuk")
-                    if(user.username == username && user.password == password){
-                        editorLogin.putLong("idUser", user.id!!)
-                        editorLogin.commit()
-                        editor.putString("user", user.username)
-                        editor.putString("password", user.password)
-                        editor.putString("nama", user.nama)
-                        editor.commit()
-                        loginCek = true
-                    }
-                }
+                editorLogin.putLong("idUser", users.id!!)
+                editorLogin.commit()
+                editor.putString("user", users.username)
+                editor.putString("password", users.password)
+                editor.putString("nama", users.nama)
+                editor.commit()
 
-                if(loginCek == true){
-                    FancyToast.makeText(this@MainActivity,"Login Berhasil\nSelamat Datang..",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,true).show();
-//                    Toast.makeText(this@MainActivity, "Selamat Datang..", Toast.LENGTH_SHORT).show()
-                    val moveHome = Intent(this@MainActivity, HomeActivity::class.java)
-                    sendNotification()
-                    startActivity(moveHome)
-                }else{
-                    FancyToast.makeText(this@MainActivity,"Data Tidak ditemukan",FancyToast.LENGTH_LONG,FancyToast.WARNING,true).show();
-//                    Toast.makeText(this@MainActivity, "Data Tidak ditemukan", Toast.LENGTH_SHORT).show()
-                }
+                FancyToast.makeText(this@MainActivity,"Login Sukses",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,false).show();
+                val moveHome = Intent(this@MainActivity, HomeActivity::class.java)
+                sendNotification()
+                startActivity(moveHome)
 
             }, Response.ErrorListener { error ->
                 try {
                     val responseBody =
                         String(error.networkResponse.data, StandardCharsets.UTF_8)
-                    val errors = JSONObject(responseBody)
-                    FancyToast.makeText(this@MainActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
-//                    Toast.makeText(this@MainActivity, errors.getString("message"), Toast.LENGTH_SHORT).show()
+                    if(error.networkResponse.statusCode == 400){
+                        val jsonObject = JSONObject(responseBody)
+                        val jsonArray = jsonObject.getJSONObject("message")
+                        for(i in jsonArray.keys()){
+                            when(i){
+                                "username"      ->etUsername!!.error = jsonArray.getJSONArray(i).getString(0)
+                                "password"      ->etPassword!!.error = jsonArray.getJSONArray(i).getString(0)
+                            }
+                        }
+                        FancyToast.makeText(this@MainActivity,"Login Gagal,\nCek Kembali Username & Password!",FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
+                    }else{
+                        val errors = JSONObject(responseBody)
+                        FancyToast.makeText(this@MainActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
+                    }
                 } catch (e: Exception){
-                    FancyToast.makeText(this@MainActivity,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+                    FancyToast.makeText(this@MainActivity,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
 //                    Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_SHORT).show()
                 }
             }) {
@@ -252,6 +290,24 @@ class MainActivity : AppCompatActivity() {
                 val headers = HashMap<String, String>()
                 headers["Accept"] = "application/json"
                 return headers
+            }
+
+            override fun getParams(): Map<String, String>? {
+                val params = HashMap<String, String>()
+                params["username"] = binding.inputLayoutUsername.toString()
+                params["password"] = binding.inputLayoutPassword.toString()
+                return params
+            }
+
+//            @Throws(AuthFailureError::class)
+//            override fun getBody():ByteArray{
+//                val gson = Gson()
+//                val requestBody = gson.toJson(username)
+//                return requestBody.toByteArray(StandardCharsets.UTF_8)
+//            }
+
+            override fun getBodyContentType(): String {
+                return "application/json"
             }
 
         }

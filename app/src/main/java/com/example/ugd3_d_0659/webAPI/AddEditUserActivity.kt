@@ -271,7 +271,7 @@ class AddEditUserActivity : AppCompatActivity() {
                     FancyToast.makeText(this@AddEditUserActivity,"Edit Profile Sukses",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,false).show();
 //                    Toast.makeText(this@AddEditUserActivity, "Data berhasil diubah", Toast.LENGTH_SHORT).show()
                     editor.putString("user", user.username)
-                    editor.putString("password", user.password)
+                    editor.putString("password", binding.etPassword.text.toString())
                     editor.putString("nama", user.nama)
                     editor.commit()
                 }
