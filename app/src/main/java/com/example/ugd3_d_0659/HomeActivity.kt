@@ -27,7 +27,8 @@ class HomeActivity : AppCompatActivity() {
                     true
                 }
                 R.id.menu_mata_pelajaran -> {
-                    changeFragment(FragmentMataPelajaran())
+                    val intent = Intent(this, MenuMapel::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.menu_buku -> {
