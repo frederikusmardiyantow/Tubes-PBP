@@ -48,7 +48,7 @@ class EditBukuActivityTest {
             )
         )
         materialButton.perform(scrollTo(), click())
-        Espresso.onView(isRoot()).perform(waitFor(3000))
+        onView(isRoot()).perform(waitFor(3000))
 
         val textInputEditText = onView(
             allOf(
@@ -81,7 +81,7 @@ class EditBukuActivityTest {
             )
         )
         materialButton2.perform(scrollTo(), click())
-        Espresso.onView(isRoot()).perform(waitFor(3000))
+        onView(isRoot()).perform(waitFor(3000))
 
         val textInputEditText2 = onView(
             allOf(
@@ -114,7 +114,7 @@ class EditBukuActivityTest {
             )
         )
         materialButton3.perform(scrollTo(), click())
-        Espresso.onView(isRoot()).perform(waitFor(3000))
+        onView(isRoot()).perform(waitFor(3000))
 
         val textInputEditText3 = onView(
             allOf(
@@ -147,7 +147,7 @@ class EditBukuActivityTest {
             )
         )
         materialButton4.perform(scrollTo(), click())
-        Espresso.onView(isRoot()).perform(waitFor(3000))
+        onView(isRoot()).perform(waitFor(3000))
 
         val textInputEditText4 = onView(
             allOf(
@@ -180,7 +180,7 @@ class EditBukuActivityTest {
             )
         )
         materialButton5.perform(scrollTo(), click())
-        Espresso.onView(isRoot()).perform(waitFor(3000))
+        onView(isRoot()).perform(waitFor(3000))
 
         val textInputEditText5 = onView(
             allOf(
@@ -213,7 +213,7 @@ class EditBukuActivityTest {
             )
         )
         materialButton6.perform(scrollTo(), click())
-        Espresso.onView(isRoot()).perform(waitFor(3000))
+        onView(isRoot()).perform(waitFor(3000))
 
         val textInputEditText6 = onView(
             allOf(
@@ -246,7 +246,7 @@ class EditBukuActivityTest {
             )
         )
         materialButton7.perform(scrollTo(), click())
-        Espresso.onView(isRoot()).perform(waitFor(3000))
+        onView(isRoot()).perform(waitFor(3000))
     }
 
     private fun childAtPosition(

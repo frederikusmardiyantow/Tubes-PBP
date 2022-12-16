@@ -122,8 +122,8 @@ class AddEditUserActivity : AppCompatActivity() {
                     etNama!!.setText(user.nama)
                     etUsername!!.setText(user.username)
                     etEmail!!.setText(user.email)
-                    etPassword!!.setText(user.password)
-                    etKonfirmasiPassword!!.setText(user.konfirmasiPassword)
+                    etPassword!!.setText("")
+                    etKonfirmasiPassword!!.setText("")
                     etTglLahir!!.setText(user.tglLahir)
                     etTelp!!.setText(user.telp)
 

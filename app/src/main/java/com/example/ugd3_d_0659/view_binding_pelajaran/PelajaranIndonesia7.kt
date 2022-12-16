@@ -21,7 +21,7 @@ class PelajaranIndonesia7 : Fragment() {
     ): View? {
         _binding = FragmentPelajaranIndonesiaBinding.inflate(inflater, container, false)
         val adapter = PelajaranIndonesiaAdapter(MateriIndonesia7List.materiIndonesiaList)
-        _binding?.materiRv?.adapter = adapter
+//        _binding?.materiRv?.adapter = adapter
 
         val view = binding.root
         return view

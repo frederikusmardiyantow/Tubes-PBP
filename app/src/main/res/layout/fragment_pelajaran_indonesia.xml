@@ -96,18 +96,18 @@
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/materi_rv"
-            android:layout_width="match_parent"
-            android:layout_height="469dp"
-            android:layout_marginTop="10dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider"
-            tools:listitem="@layout/rv_item_pelajaran_indonesia"
-            tools:viewBindingIgnore="true" />
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/materi_rv"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="469dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/divider"-->
+<!--            tools:listitem="@layout/rv_item_pelajaran_indonesia"-->
+<!--            tools:viewBindingIgnore="true" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

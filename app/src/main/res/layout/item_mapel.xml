@@ -8,6 +8,7 @@
     android:layout_margin="0dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="9dp"
+    app:cardUseCompatPadding="true"
     tools:ignore="MissingConstraints"
     android:clickable="true">
 
@@ -20,8 +21,8 @@
         <ImageView
             android:id="@+id/tv_gambar_mapel"
             android:layout_width="match_parent"
-            android:layout_height="194dp"
-            app:srcCompat="@drawable/logoproject"
+            android:layout_height="145dp"
+            app:srcCompat="@drawable/logoproject_hitam"
             android:scaleType="centerCrop"
             android:contentDescription="Mata Pelajaran"
             />
@@ -30,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"
+            android:padding="12dp"
             android:background="@color/utama2">
 
             <!-- Title, secondary and supporting text -->
@@ -45,25 +46,35 @@
                 android:id="@+id/tv_pengajar_mapel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:text="Prof. Dr. Ir. Yayayn Surayan, S.T, S.Si"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textColor="?android:attr/textColorSecondary"
                 />
-            <ImageButton
-                android:id="@+id/btn_edit_mapel"
-                android:layout_width="wrap_content"
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_baseline_edit_24"
-                app:tint="#0000FF" />
-            <ImageButton
-                android:id="@+id/btn_delete_mapel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_baseline_delete_24"
-                app:tint="#DC3939" />
+                android:layout_marginTop="10dp">
+
+                <ImageButton
+                    android:id="@+id/btn_edit_mapel"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_baseline_edit_24"
+                    app:tint="#0000FF" />
+                <ImageButton
+                    android:id="@+id/btn_delete_mapel"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_baseline_delete_24"
+                    app:tint="#DC3939" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
         </LinearLayout>
 
     </LinearLayout>
